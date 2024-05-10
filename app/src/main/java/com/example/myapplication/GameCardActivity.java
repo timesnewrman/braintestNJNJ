@@ -31,6 +31,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
+    int gridSize = rand.nextInt(4);
     ArrayList <Bitmap> elements = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
 
@@ -39,19 +40,29 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_card);
 
+        initCards();
         initGrid();
+        createPattern();
         }
 
-    private void initGrid() {
-        GridLayout grid = findViewById(R.id.game_card_grid);
-        int gridSize = rand.nextInt(4);
-
-        grid.setRowCount(gridSize);
-        grid.setColumnCount(gridSize);
-
+    private void initCards() {
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_apple));
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_banana));
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_blueberries));
+        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_cherry));
+        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_back));
+    }
+
+    private void createPattern() {
+        //TODO create pattern
+    }
+
+    private void initGrid() {
+        GridLayout grid = findViewById(R.id.game_card_grid);
+
+
+        grid.setRowCount(gridSize);
+        grid.setColumnCount(gridSize);
 
         for (int i = 0; i < gridSize; i++) {
             GridLayout.Spec rowSpec = GridLayout.spec(i, 1,1);
@@ -62,7 +73,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
                 linearLayout.setGravity(Gravity.FILL_HORIZONTAL);
-                linearLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.layout_blank));
+                linearLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.card_back));
 
                 ImageView imageView = new ImageView(this);
                 imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -84,6 +95,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
     @Override
         public void onClick (View v){
             Log.d(TAG, v.getClass().toString());
+            //TODO change logic of clicking
             if (v.getClass() == ImageView.class){
                 ImageView newImage = (ImageView) v;
                 AssetManager assetManager = getResources().getAssets();

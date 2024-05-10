@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v==icard){
+        if (v == icard){
             Intent i = new Intent(getActivity(), GameCardActivity.class);
             startActivity(i);
         }
