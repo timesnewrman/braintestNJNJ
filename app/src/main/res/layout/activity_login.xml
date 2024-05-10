@@ -10,32 +10,45 @@
         android:id="@+id/textView"
         android:layout_width="110dp"
         android:layout_height="19dp"
-        android:layout_marginTop="32dp"
         android:text="@string/action_sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/loginEmail"
+        app:layout_constraintBottom_toTopOf="@+id/loginUsername"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.50" />
+        app:layout_constraintVertical_bias="0.87" />
+
+    <EditText
+        android:id="@+id/loginUsername"
+        android:layout_width="380dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:hint="@string/prompt_username"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/loginEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginErrorHandlerText" />
 
     <EditText
         android:id="@+id/loginEmail"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="15dp"
         android:ems="10"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/loginUsername" />
 
     <EditText
         android:id="@+id/loginPassword"
         android:layout_width="380dp"
         android:layout_height="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
@@ -61,7 +74,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_failed"
         android:textColor="#FF0000"
-        app:layout_constraintBottom_toTopOf="@+id/loginEmail"
+        app:layout_constraintBottom_toTopOf="@+id/loginUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

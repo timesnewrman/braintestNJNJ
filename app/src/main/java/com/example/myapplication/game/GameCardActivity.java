@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -17,6 +17,7 @@ import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
 
 import java.io.File;

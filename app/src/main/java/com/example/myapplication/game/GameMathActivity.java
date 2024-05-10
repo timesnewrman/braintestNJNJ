@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.game;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -6,21 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityGameMathBinding;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class GameMathActivity extends AppCompatActivity implements View.OnClickListener{

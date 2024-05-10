@@ -1,7 +1,9 @@
-package com.example.myapplication.ui.stats;
+package com.example.myapplication.data;
 
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
+import com.example.myapplication.data.UserData;
 class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
 
     FirebaseFirestore fireStore;
     LayoutInflater inflater;
-    List<userData> users;
+    List users;
 
-    StatsAdapter(Context context, List<> users) {
-        this.users = states;
+    StatsAdapter(Context context, List<UserData> users) {
+        this.users = users;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -46,11 +50,14 @@ class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull StatsViewHolder holder, int position) {
+        UserData user = (UserData) users.get(position);
 
+        holder.avatar.setImageBitmap(user.avatar);
+        holder.userName.setText(user.username);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.users.size();
     }
 }

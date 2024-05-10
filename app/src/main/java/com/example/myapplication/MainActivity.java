@@ -30,7 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public SharedPreferences bools;
     FirebaseAuth fireAuth;
 
     @Override
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         com.example.myapplication.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         fireAuth = FirebaseAuth.getInstance();
-        bools =  getSharedPreferences("bools", Context.MODE_PRIVATE);
+
         checkAuthorisation();
         setContentView(binding.getRoot());
 
@@ -56,11 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkAuthorisation() {
-
         if (fireAuth.getCurrentUser() == null){
             Intent i = new Intent(MainActivity.this, LoginActivity.class)
-                    .putExtra("user", bools.contains("user"));
-
+                    .putExtra("user", true);
             startActivity(i);
         }
     }
@@ -68,6 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        //TODO remove useless
     }
 }

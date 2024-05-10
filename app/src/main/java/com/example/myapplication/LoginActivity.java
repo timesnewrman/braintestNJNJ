@@ -1,8 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,20 +9,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.myapplication.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.data.UserData;
 import com.example.myapplication.databinding.ActivityLoginBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+    boolean creatingUser;
     FirebaseAuth fireAuth = FirebaseAuth.getInstance();
-    EditText emailView, passwordView;
+    EditText emailView, passwordView, usernameView;
     Button loginView;
     TextView errorView;
     ActivityLoginBinding binding;
@@ -33,7 +31,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_login);
+
+        creatingUser = Objects.requireNonNull(getIntent().getExtras()).getBoolean("user");
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -42,11 +42,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initViews() {
         emailView = binding.loginEmail;
-        loginView = binding.loginButton;
         passwordView = binding.loginPassword;
+        usernameView = binding.loginUsername;
         errorView = binding.loginErrorHandlerText;
 
+        loginView = binding.loginButton;
+
         errorView.setVisibility(View.INVISIBLE);
+        if(!creatingUser){
+            usernameView.setVisibility(View.GONE);
+        }
 
         loginView.setOnClickListener(this);
     }
@@ -56,8 +61,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v == loginView){
             String passwordText = String.valueOf(passwordView.getText());
 
-            if (!(passwordView.getText() != null
-               | emailView.getText() != null)){
+            if (  passwordText.isEmpty()
+               |  String.valueOf(emailView.getText()).isEmpty()
+               |( String.valueOf(usernameView.getText()).isEmpty()
+                   && usernameView.getVisibility()==View.VISIBLE )
+                ){
                 showError("Please fill in all fields.");
                 return;
             }
@@ -80,10 +88,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = String.valueOf(emailView.getText());
         String password = String.valueOf(passwordView.getText());
 
-        if (Objects.requireNonNull(getIntent().getExtras()).getBoolean("user")) {
-            logIn(email, password);
-        }  else {
+        if (creatingUser) {
             createUser(email, password);
+        }  else {
+            logIn(email, password);
         }
     }
 
@@ -116,16 +124,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         showError(error.toString());
 
-                        Log.e("firebase auth", Arrays.toString(error.getStackTrace()));
+                        Log.e("firebase auth ", Arrays.toString(error.getStackTrace()));
                     }
                 });
     }
 
     private void exitActivity(FirebaseUser user) {
-        Intent i = new Intent(this, MainActivity.class)
-                .putExtra("user", user);
-        binding = null;
-        startActivity(i);
+        String username = String.valueOf(usernameView.getText());
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("users")
+                .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
+                .set(new UserData(username))
+                .addOnFailureListener(e -> {
+                    showError(e.toString());
+                    Log.e("firebase fireStore ", Arrays.toString(e.getStackTrace()));
+                })
+                .addOnSuccessListener(voidd -> {
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class)
+                            .putExtra("user", user);
+                    binding = null;
+                    startActivity(i);
+                });
+
     }
 
     @SuppressLint("SetTextI18n")

@@ -13,13 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.GameCardActivity;
-import com.example.myapplication.GameMathActivity;
-import com.example.myapplication.MainActivity;
+import com.example.myapplication.game.GameCardActivity;
+import com.example.myapplication.game.GameMathActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentHomeBinding;
-
-import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
