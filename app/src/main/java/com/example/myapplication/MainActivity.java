@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.myapplication.LoginActivity;
@@ -62,9 +63,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     @Override
     public void onClick(View v) {
-        //TODO remove useless
+        //TODO remove OnClick
     }
+//    @Override
+//
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        if(item.getItemId() == R.id.action_settings){
+//
+//        } else {
+//            return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

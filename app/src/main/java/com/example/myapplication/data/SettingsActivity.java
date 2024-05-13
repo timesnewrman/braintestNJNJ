@@ -1,10 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.data;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.example.myapplication.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

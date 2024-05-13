@@ -13,15 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.game.GameCardActivity;
 import com.example.myapplication.game.GameMathActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     Button icard;
-    Button imath;
+    Button imath, ipattern;
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,10 +39,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        //TODO change to viewbinding
         icard = root.findViewById(R.id.main_gameintent_card);
         icard.setOnClickListener(this);
         imath = root.findViewById(R.id.main_gameintent_fast);
         imath.setOnClickListener(this);
+        ipattern = root.findViewById(R.id.main_gameintent_pattern);
+        ipattern.setOnClickListener(this);
 
         return root;
         }catch (Exception e){
@@ -63,6 +68,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         if (v == imath){
             Intent i2 = new Intent(getActivity(), GameMathActivity.class);
+            startActivity(i2);
+        }
+        if (v == ipattern){
+            FirebaseAuth.getInstance().signOut();
+            Intent i2 = new Intent(getActivity(), LoginActivity.class)
+                    .putExtra("user", true);
             startActivity(i2);
         }
     }

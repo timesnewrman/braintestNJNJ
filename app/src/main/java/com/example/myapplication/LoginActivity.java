@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button loginView;
     TextView errorView;
     ActivityLoginBinding binding;
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Exception error = task.getException();
                         assert error != null;
 
-                        showError(error.toString());
+                        showError(error);
 
                         Log.e("firebase auth", Arrays.toString(error.getStackTrace()));
                     }
@@ -122,9 +123,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Exception error = task.getException();
                         assert error != null;
 
-                        showError(error.toString());
+                        showError(error);
 
-                        Log.e("firebase auth ", Arrays.toString(error.getStackTrace()));
                     }
                 });
     }
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .set(new UserData(username))
                 .addOnFailureListener(e -> {
                     showError(e.toString());
-                    Log.e("firebase fireStore ", Arrays.toString(e.getStackTrace()));
+
                 })
                 .addOnSuccessListener(voidd -> {
                     Intent i = new Intent(LoginActivity.this, MainActivity.class)
@@ -153,5 +153,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void showError(String err){
         errorView.setVisibility(View.VISIBLE);
         errorView.setText(getString(R.string.login_failed)+err);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showError(Exception err){
+        errorView.setVisibility(View.VISIBLE);
+        errorView.setText(getString(R.string.login_failed)+err);
+        Log.e(TAG, Arrays.toString(err.getStackTrace()));
     }
 }

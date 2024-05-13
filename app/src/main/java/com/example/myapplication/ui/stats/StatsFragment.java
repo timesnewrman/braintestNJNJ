@@ -9,20 +9,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.databinding.FragmentNotificationsBinding;
+import com.example.myapplication.databinding.FragmentStatsBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class StatsFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentStatsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         StatsViewModel notificationsViewModel =
                 new ViewModelProvider(this).get(StatsViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-
+        binding = FragmentStatsBinding.inflate(inflater, container, false);
+        
+        fetchDatabase(FirebaseFirestore.getInstance());
         return binding.getRoot();
+    }
+
+    private void fetchDatabase(FirebaseFirestore instance) {
     }
 
     @Override
