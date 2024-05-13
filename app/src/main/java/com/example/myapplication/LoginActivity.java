@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             if (  passwordText.isEmpty()
                |  String.valueOf(emailView.getText()).isEmpty()
+
                |( String.valueOf(usernameView.getText()).isEmpty()
                    && usernameView.getVisibility()==View.VISIBLE )
                 ){
@@ -107,8 +108,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         assert error != null;
 
                         showError(error);
-
-                        Log.e("firebase auth", Arrays.toString(error.getStackTrace()));
                     }
                 });
     }
@@ -136,11 +135,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         database.collection("users")
                 .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
                 .set(new UserData(username))
-                .addOnFailureListener(e -> {
-                    showError(e.toString());
+                .addOnFailureListener(this::showError)
 
-                })
-                .addOnSuccessListener(voidd -> {
+                .addOnSuccessListener(unused -> {
                     Intent i = new Intent(LoginActivity.this, MainActivity.class)
                             .putExtra("user", user);
                     binding = null;
