@@ -9,9 +9,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.example.myapplication.R;
 
 public class SettingsActivity extends AppCompatActivity {
-
+//TODO finish settings
     @Override
-    //TODO finish settings
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);

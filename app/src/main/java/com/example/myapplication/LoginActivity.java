@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView errorView;
     ActivityLoginBinding binding;
     private final String TAG = this.getClass().getSimpleName();
+    private HashMap<String, String> errorText = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initErrorMessages();
         initViews();
+    }
+
+    private void initErrorMessages() {
+        errorText.put("com.google.firebase.firestore.FirebaseFirestoreException",
+                "Internal server error, try again later. Details: ");
+        errorText.put("com.google.firebase.auth.FirebaseAuthInvalidCredentialsException",
+                "Invalid credentials");
+        errorText.put("com.google.firebase.auth.FirebaseAuthUserCollisionException",
+                "User with this email already exists. ");
+        errorText.put(null,
+                "Unknown error. Detals: ");
     }
 
     private void initViews() {
@@ -102,7 +116,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        exitActivity(fireAuth.getCurrentUser());
+                        FirebaseFirestore database = FirebaseFirestore.getInstance();
+                        String username = String.valueOf(usernameView.getText());
+
+                        database.collection("users")
+                                .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
+                                .set(new UserData(username))
+                                .addOnFailureListener(err -> {
+                                    fireAuth.signOut();
+                                    showError(err);
+                                })
+                                .addOnSuccessListener(unused -> {
+                                    exitActivity(fireAuth.getCurrentUser());
+                                });
+
                     } else {
                         Exception error = task.getException();
                         assert error != null;
@@ -117,6 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         fireAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        Log.wtf(TAG, "Authencated"+ Objects.requireNonNull(fireAuth.getCurrentUser()).getUid());
                         exitActivity(fireAuth.getCurrentUser());
                     } else {
                         Exception error = task.getException();
@@ -131,18 +159,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void exitActivity(FirebaseUser user) {
         String username = String.valueOf(usernameView.getText());
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection("users")
-                .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
-                .set(new UserData(username))
-                .addOnFailureListener(this::showError)
+        Intent i = new Intent(LoginActivity.this, MainActivity.class)
+                .putExtra("user", user);
+        binding = null;
+        startActivity(i);
 
-                .addOnSuccessListener(unused -> {
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class)
-                            .putExtra("user", user);
-                    binding = null;
-                    startActivity(i);
-                });
 
     }
 
@@ -155,7 +176,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @SuppressLint("SetTextI18n")
     private void showError(Exception err){
         errorView.setVisibility(View.VISIBLE);
-        errorView.setText(getString(R.string.login_failed)+err);
+        errorView.setText(getString(R.string.login_failed)
+                +errorText.get(Objects.requireNonNull(err.getClass().getName()))
+                +err.toString());
+
         Log.e(TAG, Arrays.toString(err.getStackTrace()));
+        Log.e(TAG, err.toString());
     }
 }

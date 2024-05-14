@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
-
+<!--TODO fix the layout, it's moving somehow-->
     <TextView
         android:id="@+id/textView"
         android:layout_width="110dp"
