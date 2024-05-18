@@ -39,35 +39,56 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityGameCardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         initCards();
         initGrid();
 
         Log.i(TAG, Arrays.deepToString(gridPattern));
 
-        startGame();
+        CardActivityModel thread = new CardActivityModel();
+        thread.start();
         }
 
-    private void startGame() {
-        displayPalette();
-        //TODO extract startgame method to another thread
-    }
+        private class CardActivityModel extends Thread{
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(200L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                displayPalette();
+                vipeOut();
+            }
 
-    private void displayPalette() {
-        //TODO pallete
-        Bitmap[][] distinct = Arrays.stream(gridPattern).distinct().toArray(Bitmap[][]::new);
+            private void vipeOut() {
+                //TODO display card back for all grid buttons
+            }
 
-        LinearLayout ingredientsSet = binding.gameCardPallete;
-        for (Bitmap[] row:distinct) {
-            for(Bitmap column: row){
-                ImageButton imageButton = new ImageButton(CardActivity.this.co);
-                ingredientsSet.addView();
+            private void displayPalette() {
+                LinearLayout palette = binding.gameCardPallete;
+                for (Bitmap fruit:elements) {
 
+                    ImageButton imageButton = new ImageButton(CardActivity.this);
+
+                    imageButton.setLayoutParams(new ViewGroup.LayoutParams(
+                            60, ViewGroup.LayoutParams.MATCH_PARENT));
+                    imageButton.setAdjustViewBounds(true);
+                    imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                    imageButton.setImageBitmap(fruit);
+
+                    palette.addView(imageButton);
+
+                }
             }
         }
-    }
+
+
+
 
     private void initCards() {
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_apple));
@@ -88,6 +109,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         );
 
         ImageView imageView = new ImageView(this);
+
         imageView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setAdjustViewBounds(true);
