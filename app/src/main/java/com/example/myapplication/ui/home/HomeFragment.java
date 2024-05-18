@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
+//TODO change to main menu, make it so it contains your current level and stats
         //TODO change to viewbinding
         icard = root.findViewById(R.id.main_gameintent_card);
         icard.setOnClickListener(this);

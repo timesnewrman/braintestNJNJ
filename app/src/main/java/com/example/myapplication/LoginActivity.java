@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.data.UserData;
+import com.example.myapplication.data.UserStats;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView errorView;
     ActivityLoginBinding binding;
     private final String TAG = this.getClass().getSimpleName();
-    private HashMap<String, String> errorText = new HashMap<>();
+    private final HashMap<String, String> errorText = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,25 +103,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void authorize() {
         String email = String.valueOf(emailView.getText());
         String password = String.valueOf(passwordView.getText());
+        String username = String.valueOf(usernameView.getText());
 
         if (creatingUser) {
-            createUser(email, password);
+            createUser(email, password, username);
         }  else {
             logIn(email, password);
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private void createUser(String email, String password) {
+    private void createUser(String email, String password, String username) {
         fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseFirestore database = FirebaseFirestore.getInstance();
-                        String username = String.valueOf(usernameView.getText());
+
 
                         database.collection("users")
                                 .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
-                                .set(new UserData(username))
+                                .set(new UserStats(username))
                                 .addOnFailureListener(err -> {
                                     fireAuth.signOut();
                                     showError(err);
