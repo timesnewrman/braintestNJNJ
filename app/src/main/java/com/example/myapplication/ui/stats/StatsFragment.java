@@ -1,5 +1,5 @@
 package com.example.myapplication.ui.stats;
-
+//TODO fix the adapter
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.DialogPreference;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,26 +40,31 @@ public class StatsFragment extends Fragment {
 
         binding = FragmentStatsBinding.inflate(inflater, container, false);
 
-        displayAdapterView();
+        try {
+            displayAdapterView();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return binding.getRoot();
     }
 
     @SuppressLint("SetTextI18n")
-    private void displayAdapterView() {
+    private void displayAdapterView() throws Exception {
         RecyclerView statsView = binding.statsView;
-        TextView errorView = binding.statsErrorText;
-        try {
-            fetchDatabase();
-            if (exception != null) throw exception;
 
-            StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave);
-            statsView.setAdapter(statsAdapter);
-            statsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }catch (Exception e){
-            errorView.setVisibility(View.VISIBLE);
-            errorView.setText("Oops! "+ e.toString());
-            Log.e(TAG, "firebase error", e);
-        }
+        TextView errorView = binding.statsErrorText;
+
+        fetchDatabase();
+
+        Log.i(TAG, databaseSave.toString());
+
+        StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave);
+        //TODO fix this method not getting past this comment
+        Log.i(TAG, statsAdapter.toString()+" stats adapter created");
+
+        statsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        statsView.setAdapter(statsAdapter);
+
     }
 
     private void fetchDatabase(){
@@ -70,9 +76,11 @@ public class StatsFragment extends Fragment {
                                         ((Objects.requireNonNull(document.getData())),
                                         this.getActivity())
                         );
+                        Log.i(TAG, "added");
                     }
                 })
-                .addOnFailureListener(err -> exception = err);
+                .addOnFailureListener(err -> {throw new RuntimeException(err);});
+
     }
 
     @Override

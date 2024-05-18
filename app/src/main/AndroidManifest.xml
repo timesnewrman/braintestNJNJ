@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
-        <activity
-            android:name=".data.SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="false"
@@ -24,7 +21,7 @@
             android:name=".game.GameMathActivity"
             android:exported="false" />
         <activity
-            android:name=".game.GameCardActivity"
+            android:name=".game.card.CardActivity"
             android:exported="false"
             android:label="@string/title_activity_game_card"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

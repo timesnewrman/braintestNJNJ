@@ -64,4 +64,9 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         System.out.println("StatsAdapter: list size is " + users.size());
         return this.users.size();
     }
+
+    @NonNull
+    public String toString(){
+        return users.toString();
+    }
 }
