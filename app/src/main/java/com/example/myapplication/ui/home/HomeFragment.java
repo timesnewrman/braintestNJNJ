@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.LoginActivity;
-import com.example.myapplication.game.card.CardActivity;
+import com.example.myapplication.game.card.CardActivityView;
 import com.example.myapplication.game.GameMathActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentHomeBinding;
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == icard){
-            Intent i = new Intent(getActivity(), CardActivity.class);
+            Intent i = new Intent(getActivity(), CardActivityView.class);
             startActivity(i);
         }
         if (v == imath){

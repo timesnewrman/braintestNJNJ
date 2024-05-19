@@ -4,30 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".game.card.CardActivity">
+    tools:context=".game.card.CardActivityView">
 
     <LinearLayout
-        android:id="@+id/gameCardPallete"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_card_grid"></LinearLayout>
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/game_card_grid"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/game_card_starcount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="34sp" />
 
-    </androidx.gridlayout.widget.GridLayout>
+        <LinearLayout
+            android:id="@+id/game_card_pallete"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"></LinearLayout>
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/game_card_grid"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp">
+
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <Button
+            android:id="@+id/game_card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

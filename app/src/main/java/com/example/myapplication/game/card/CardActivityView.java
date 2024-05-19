@@ -13,26 +13,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
+import com.google.android.material.carousel.CarouselSnapHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class CardActivity extends AppCompatActivity implements View.OnClickListener {
+public class CardActivityView extends AppCompatActivity implements View.OnClickListener {
 
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
-    int gridSize = rand.nextInt(2)+3;
+    int gridSize = rand.nextInt(2)+2;
 
 
     private final Bitmap[][] gridPattern = new Bitmap[gridSize][gridSize];
     ArrayList <Bitmap> elements = new ArrayList<>();
 
-
+    Bitmap brush;
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -47,16 +51,16 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.i(TAG, Arrays.deepToString(gridPattern));
 
-        CardActivityModel thread = new CardActivityModel();
+        startGame thread = new startGame();
         thread.start();
         }
 
-        private class CardActivityModel extends Thread{
+        private class startGame extends Thread{
             @Override
             public void run() {
                 super.run();
                 try {
-                    Thread.sleep(200L);
+                    Thread.sleep(3000L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,23 +69,29 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             private void vipeOut() {
-                //TODO display card back for all grid buttons
+                for (int i = 0; i < gridSize*gridSize; i++) {
+                    ImageView gridElement = (ImageView) ((LinearLayout) CardActivityView.this.binding.gameCardGrid.getChildAt(i)).getChildAt(0);
+                    CardActivityView.this.runOnUiThread(
+                            () -> gridElement.setImageBitmap(elements.get(elements.size()-1)));
+                }
             }
 
             private void displayPalette() {
                 LinearLayout palette = binding.gameCardPallete;
                 for (Bitmap fruit:elements) {
 
-                    ImageButton imageButton = new ImageButton(CardActivity.this);
+                    ImageButton imageButton = new ImageButton(CardActivityView.this);
 
                     imageButton.setLayoutParams(new ViewGroup.LayoutParams(
-                            60, ViewGroup.LayoutParams.MATCH_PARENT));
+                            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     imageButton.setAdjustViewBounds(true);
                     imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
 
                     imageButton.setImageBitmap(fruit);
 
-                    palette.addView(imageButton);
+                    CardActivityView.this.runOnUiThread(
+                            () -> palette.addView(imageButton));
+                    imageButton.setOnClickListener(CardActivityView.this);
 
                 }
             }
@@ -151,14 +161,45 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
     @Override
         public void onClick (View v){
             Log.d(TAG, v.getClass().toString());
-            //TODO change logic of clicking;
-            //TODO check for background if startGame thread gives permission; if user gets the card wrong take out the points
-            if (v.getClass() == ImageView.class){
+            if (v.getClass() == ImageView.class && brush != null){
                 ImageView newImage = (ImageView) v;
-
-                int index = rand.nextInt(elements.size());
-                newImage.setImageBitmap(elements.get(index));
-                newImage.setScaleType(ImageView.ScaleType.FIT_XY);
+                newImage.setImageBitmap(brush);
+            }
+            if (v.getClass() == ImageButton.class){
+                ImageButton view = (ImageButton) v;
+                brush = ((BitmapDrawable)view.getDrawable()).getBitmap();
+            }
+            if (v == binding.gameCardButton){
+                checkCard();
             }
         }
+
+    private void checkCard() {
+        binding.gameCardButton.setVisibility(View.INVISIBLE);
+        int stars = 0;
+
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                LinearLayout linearLayout = (LinearLayout) binding.gameCardGrid.getChildAt(i*gridSize+j);
+                ImageView input = (ImageView) linearLayout.getChildAt(0);
+                boolean isCardCorrect = ((BitmapDrawable)input.getDrawable()).getBitmap() == gridPattern[i][j];
+
+                stars += isCardCorrect? 30 : -20;
+
+                if (!isCardCorrect) {
+                    ImageView outline = new ImageView(CardActivityView.this);
+                    outline.setImageDrawable(
+                            AppCompatResources.getDrawable(CardActivityView.this, R.drawable.rectangle_17)
+                    );
+
+                    linearLayout.addView(outline);
+                }
+            }
+        }
+
+        binding.gameCardStarcount.setText(stars);
+
+        DatabaseUpdater updater = new DatabaseUpdater(CardActivityView.this);
+        updater.upload(stars);
+    }
 }
