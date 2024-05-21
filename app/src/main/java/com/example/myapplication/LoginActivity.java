@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.data.UserStats;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,11 +26,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     boolean creatingUser;
     FirebaseAuth fireAuth = FirebaseAuth.getInstance();
     EditText emailView, passwordView, usernameView;
-    Button loginView;
+    Button loginButton;
     TextView errorView;
     ActivityLoginBinding binding;
     private final String TAG = this.getClass().getSimpleName();
-    private final HashMap<String, String> errorText = new HashMap<>();
+    private final HashMap<String, String> errorExplanationText = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +43,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initErrorMessages();
         initViews();
+
+        loginButton.setText(creatingUser? "Register" : "Sign in");
     }
 
     private void initErrorMessages() {
-        errorText.put("com.google.firebase.firestore.FirebaseFirestoreException",
+        errorExplanationText.put("com.google.firebase.firestore.FirebaseFirestoreException",
                 "Internal server error, try again later. Details: ");
-        errorText.put("com.google.firebase.auth.FirebaseAuthInvalidCredentialsException",
-                "Invalid credentials");
-        errorText.put("com.google.firebase.auth.FirebaseAuthUserCollisionException",
+        errorExplanationText.put("com.google.firebase.auth.FirebaseAuthInvalidCredentialsException",
+                "Invalid credentials. ");
+        errorExplanationText.put("com.google.firebase.auth.FirebaseAuthUserCollisionException",
                 "User with this email already exists. ");
-        errorText.put(null,
-                "Unknown error. Detals: ");
+        errorExplanationText.put("com.google.firebase.FirebaseNetworkException",
+                "Network error. Please check the internet connection. ");
     }
 
     private void initViews() {
@@ -61,19 +64,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         usernameView = binding.loginUsername;
         errorView = binding.loginErrorHandlerText;
 
-        loginView = binding.loginButton;
+        loginButton = binding.loginButton;
 
         errorView.setVisibility(View.INVISIBLE);
         if(!creatingUser){
             usernameView.setVisibility(View.GONE);
         }
 
-        loginView.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == loginView){
+        if (v == loginButton){
             String passwordText = String.valueOf(passwordView.getText());
 
             if (  passwordText.isEmpty()
@@ -105,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = String.valueOf(passwordView.getText());
         String username = String.valueOf(usernameView.getText());
 
+        Log.i(TAG, email+password+username);
         if (creatingUser) {
             createUser(email, password, username);
         }  else {
@@ -119,17 +123,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (task.isSuccessful()) {
                         FirebaseFirestore database = FirebaseFirestore.getInstance();
 
+                        DatabaseUpdater upload = new DatabaseUpdater(LoginActivity.this);
+                        try {
+                            upload.create(new UserStats(username));
+                        }catch (RuntimeException e){
+                            String causeClass = Objects.requireNonNull(e.getCause()).getClass().toString();
+                            String explanation = errorExplanationText.get(causeClass);
 
-                        database.collection("users")
-                                .document(Objects.requireNonNull(fireAuth.getCurrentUser()).getUid())
-                                .set(new UserStats(username))
-                                .addOnFailureListener(err -> {
-                                    fireAuth.signOut();
-                                    showError(err);
-                                })
-                                .addOnSuccessListener(unused -> {
-                                    exitActivity(fireAuth.getCurrentUser());
-                                });
+                            showError(Objects.isNull(explanation) ? causeClass : explanation);
+                        }
 
                     } else {
                         Exception error = task.getException();
@@ -178,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void showError(Exception err){
         errorView.setVisibility(View.VISIBLE);
         errorView.setText(getString(R.string.login_failed)
-                +errorText.get(Objects.requireNonNull(err.getClass().getName()))
+                + errorExplanationText.get(Objects.requireNonNull(err.getClass().getName()))
                 +err.toString());
 
         Log.e(TAG, Arrays.toString(err.getStackTrace()));

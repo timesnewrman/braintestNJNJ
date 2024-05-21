@@ -1,5 +1,6 @@
 package com.example.myapplication.game.card;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,13 +15,12 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.gridlayout.widget.GridLayout;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
-import com.google.android.material.carousel.CarouselSnapHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +49,9 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
         initCards();
         initGrid();
 
+        binding.gameCardButton.setOnClickListener(this);
+        binding.gameCardButton.setVisibility(View.INVISIBLE);
+
         Log.i(TAG, Arrays.deepToString(gridPattern));
 
         startGame thread = new startGame();
@@ -66,6 +69,8 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
                 }
                 displayPalette();
                 vipeOut();
+                CardActivityView.this.runOnUiThread(
+                        () -> binding.gameCardButton.setVisibility(View.VISIBLE));
             }
 
             private void vipeOut() {
@@ -187,19 +192,20 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
                 stars += isCardCorrect? 30 : -20;
 
                 if (!isCardCorrect) {
-                    ImageView outline = new ImageView(CardActivityView.this);
-                    outline.setImageDrawable(
+                    input.setImageDrawable(
                             AppCompatResources.getDrawable(CardActivityView.this, R.drawable.rectangle_17)
                     );
-
-                    linearLayout.addView(outline);
                 }
             }
         }
 
-        binding.gameCardStarcount.setText(stars);
+        binding.gameCardStarcount.setText(String.valueOf(stars));
 
         DatabaseUpdater updater = new DatabaseUpdater(CardActivityView.this);
-        updater.upload(stars);
+        updater.increment(stars);
+
+        startActivity(new Intent(CardActivityView.this, MainActivity.class));
     }
+
+
 }

@@ -29,6 +29,7 @@ import java.util.Objects;
 public class StatsFragment extends Fragment {
     private Exception exception;
     private FragmentStatsBinding binding;
+    TextView errorView;
     ArrayList<Object> databaseSave = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
     private final FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
@@ -41,33 +42,32 @@ public class StatsFragment extends Fragment {
         binding = FragmentStatsBinding.inflate(inflater, container, false);
 
         try {
-            displayAdapterView();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        displayAdapterView();
+        } catch (RuntimeException e){
+            errorView.setText(Objects.requireNonNull(e.getCause()).toString());
         }
+
         return binding.getRoot();
     }
 
     @SuppressLint("SetTextI18n")
-    private void displayAdapterView() throws Exception {
+    private void displayAdapterView(){
+
         RecyclerView statsView = binding.statsView;
 
-        TextView errorView = binding.statsErrorText;
+        errorView = binding.statsErrorText;
+        errorView.setText("Loading");
+        errorView.setVisibility(View.VISIBLE);
 
-        fetchDatabase();
+        fetchDatabase(statsView);
 
         Log.i(TAG, databaseSave.toString());
 
-        StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave);
-        //TODO fix this method not getting past this comment
-        Log.i(TAG, statsAdapter.toString()+" stats adapter created");
 
-        statsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        statsView.setAdapter(statsAdapter);
 
     }
 
-    private void fetchDatabase(){
+    private void fetchDatabase(RecyclerView statsView){
         fireStore.collection("users")
                 .get()
                 .addOnSuccessListener(task -> {
@@ -78,6 +78,14 @@ public class StatsFragment extends Fragment {
                         );
                         Log.i(TAG, "added");
                     }
+                    Log.i(TAG, databaseSave.toString());
+
+                    StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave);
+
+                    statsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    statsView.setAdapter(statsAdapter);
+
+                    errorView.setVisibility(View.INVISIBLE);
                 })
                 .addOnFailureListener(err -> {throw new RuntimeException(err);});
 

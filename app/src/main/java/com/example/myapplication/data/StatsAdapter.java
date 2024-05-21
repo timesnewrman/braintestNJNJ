@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
@@ -31,11 +33,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
 
     static class StatsViewHolder extends RecyclerView.ViewHolder {
         final ImageView avatar;
-        final TextView userName;
+        final TextView username;
+        final TextView stars;
         public StatsViewHolder(@NonNull View itemView) {
             super(itemView);
             this.avatar = itemView.findViewById(R.id.StatsitemImageView);
-            this.userName = itemView.findViewById(R.id.StatsitemTextView);
+            this.username = itemView.findViewById(R.id.StatsitemTextView);
+            this.stars = itemView.findViewById(R.id.StatsitemStarCount);
             Log.i("StatsAdapter", "initialised stats viewHolder");
         }
     }
@@ -54,7 +58,8 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         UserStats user = (UserStats) users.get(position);
 
         holder.avatar.setImageBitmap(user.avatar);
-        holder.userName.setText(user.username);
+        holder.username.setText(user.username);
+        holder.stars.setText(user.stars == null ? "0" : user.stars.toString());
 
         Log.i("StatsAdapter", "binded view holder");
     }

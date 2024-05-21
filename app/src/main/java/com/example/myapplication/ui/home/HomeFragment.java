@@ -40,12 +40,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 //TODO change to main menu, make it so it contains your current level and stats
         //TODO change to viewbinding
-        icard = root.findViewById(R.id.main_gameintent_card);
+        icard = binding.mainGameintentCard;
         icard.setOnClickListener(this);
-        imath = root.findViewById(R.id.main_gameintent_fast);
+        imath = binding.mainGameintentFast;
         imath.setOnClickListener(this);
-        ipattern = root.findViewById(R.id.main_gameintent_pattern);
+        ipattern = binding.mainLoginintentRegister;
         ipattern.setOnClickListener(this);
+
 
         return root;
         }catch (Exception e){
@@ -74,6 +75,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             FirebaseAuth.getInstance().signOut();
             Intent i2 = new Intent(getActivity(), LoginActivity.class)
                     .putExtra("user", true);
+            startActivity(i2);
+        }
+        if (v == binding.mainLoginintentSignin){
+            FirebaseAuth.getInstance().signOut();
+            Intent i2 = new Intent(getActivity(), LoginActivity.class)
+                    .putExtra("user", false);
             startActivity(i2);
         }
     }

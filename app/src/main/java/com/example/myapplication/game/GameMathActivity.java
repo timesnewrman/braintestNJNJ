@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,8 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameMathBinding;
+import com.example.myapplication.game.card.CardActivityView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -42,13 +46,13 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
         initViews();
 
-        times = 3;
+        times = rand.nextInt(5)+2;
 
         answerB1.setOnClickListener(this);
         answerB2.setOnClickListener(this);
         answerB3.setOnClickListener(this);
 
-        initQuestion(rand);
+        initQuestion(true);
         initButtons(rand);
     }
 
@@ -61,16 +65,16 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
         answerB3 = binding.mathButton3;
     }
 
-    private void initQuestion(Random rand){
+    private void initQuestion(boolean add) {
 
+        if (add) {
+            for (int i = 0; i < 2; i++) {
+                elements.add(rand.nextInt(30));
+            }
 
-        for (int i = 0; i < 2; i++)
-        {
-            elements.add(rand.nextInt(30));
+            questionText.setText(elements.toString());
+            correct = elements.stream().mapToInt(Integer::intValue).sum();
         }
-
-        questionText.setText(elements.toString());
-        correct = elements.stream().mapToInt(Integer::intValue).sum();
     }
 
     @SuppressLint("SetTextI18n")
@@ -110,19 +114,31 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
             if (Integer.parseInt(clickedButton.getText().toString()) == correct)
             {
                 Toast.makeText(GameMathActivity.this,"correct", Toast.LENGTH_SHORT).show();
-                points += 10;
+                points += 30;
                 pointText.setText(Integer.toString(points));
 
                 times--;
                 if (times == 0)
                 {
                     Toast.makeText(GameMathActivity.this, "congrats! you have "+Integer.toString(points)+" points now", Toast.LENGTH_SHORT).show();
-                    Context context = GameMathActivity.this;
 
+                    DatabaseUpdater updater = new DatabaseUpdater(GameMathActivity.this);
+                    updater.increment(points);
+
+                    startActivity(new Intent(GameMathActivity.this, MainActivity.class));
                 } else {
-                    initQuestion(rand);
+                    initQuestion(true);
                     initButtons(rand);
                 }
+            } else {
+                points -= 20;
+                pointText.setText(Integer.toString(points));
+
+                elements.remove(1);
+                times++;
+                initQuestion(false);
+
+                initButtons(rand);
             }
         }
     }
