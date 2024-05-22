@@ -33,7 +33,6 @@ public class DatabaseUpdater {
                 });
     }
 
-
     public void increment(int stars) {
         database.collection("users")
                 .document(userID)

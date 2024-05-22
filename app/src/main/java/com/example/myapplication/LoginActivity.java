@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FirebaseAuth fireAuth = FirebaseAuth.getInstance();
     EditText emailView, passwordView, usernameView;
     Button loginButton;
-    TextView errorView;
+    TextView errorView, titleView;
     ActivityLoginBinding binding;
     private final String TAG = this.getClass().getSimpleName();
     private final HashMap<String, String> errorExplanationText = new HashMap<>();
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initViews();
 
         loginButton.setText(creatingUser? "Register" : "Sign in");
+        titleView.setText("");
     }
 
     private void initErrorMessages() {
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordView = binding.loginPassword;
         usernameView = binding.loginUsername;
         errorView = binding.loginErrorHandlerText;
+        titleView = binding.textView;
 
         loginButton = binding.loginButton;
 
@@ -107,6 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = String.valueOf(emailView.getText());
         String password = String.valueOf(passwordView.getText());
         String username = String.valueOf(usernameView.getText());
+        loginButton.setVisibility(View.GONE);
 
         Log.i(TAG, email+password+username);
         if (creatingUser) {
@@ -118,17 +121,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @SuppressLint("SetTextI18n")
     private void createUser(String email, String password, String username) {
+        titleView.setText("Registering you. Please wait");
         fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
 
                         DatabaseUpdater upload = new DatabaseUpdater(LoginActivity.this);
                         try {
-                            upload.create(new UserStats(username));
+                            upload.create(new UserStats(
+                                    username, Objects.requireNonNull(fireAuth.getCurrentUser()).getUid()
+                            ));
+                            titleView.setText("Done!");
+                            exitActivity(fireAuth.getCurrentUser());
                         }catch (RuntimeException e){
                             String causeClass = Objects.requireNonNull(e.getCause()).getClass().toString();
                             String explanation = errorExplanationText.get(causeClass);
-
+                            Log.e(TAG, explanation);
                             showError(Objects.isNull(explanation) ? causeClass : explanation);
                         }
 
@@ -143,10 +151,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @SuppressLint("SetTextI18n")
     private void logIn(String email, String password) {
+        titleView.setText("Please wait");
         fireAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.wtf(TAG, "Authencated"+ Objects.requireNonNull(fireAuth.getCurrentUser()).getUid());
+                        Log.e(TAG, "Authenticated"+ Objects.requireNonNull(fireAuth.getCurrentUser()).getUid());
+                        titleView.setText("Done!");
                         exitActivity(fireAuth.getCurrentUser());
                     } else {
                         Exception error = task.getException();
@@ -169,6 +179,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void showError(String err){
         errorView.setVisibility(View.VISIBLE);
         errorView.setText(getString(R.string.login_failed)+err);
+
+        titleView.setText("");
+        loginButton.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -180,5 +193,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Log.e(TAG, Arrays.toString(err.getStackTrace()));
         Log.e(TAG, err.toString());
+
+        loginButton.setVisibility(View.VISIBLE);
+        titleView.setText("");
     }
 }

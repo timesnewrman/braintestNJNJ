@@ -49,8 +49,6 @@ public class DashboardFragment extends Fragment {
             list[i] = i;
         }
 
-        Log.e(TAG, Arrays.toString(list)+ Collections.singletonList(list));
-
         LevelAdapter levelAdapter = new LevelAdapter(getContext(), Arrays.asList(list));
 
         levelView.setLayoutManager(new GridLayoutManager(getContext(),2));

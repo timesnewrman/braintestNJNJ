@@ -20,6 +20,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     Button icard;
@@ -30,25 +32,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                              ViewGroup container, Bundle savedInstanceState){
         try{
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+            HomeViewModel homeViewModel =
+                    new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+            binding = FragmentHomeBinding.inflate(inflater, container, false);
+            View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-//TODO change to main menu, make it so it contains your current level and stats
+            final TextView textView = binding.textHome;
+            //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        icard = binding.mainGameintentCard;
-        icard.setOnClickListener(this);
-        imath = binding.mainGameintentFast;
-        imath.setOnClickListener(this);
-        ipattern = binding.mainLoginintentRegister;
-        ipattern.setOnClickListener(this);
+            //TODO change to main menu, make it so it contains your current level and stats
+
+            icard = binding.mainGameintentCard;
+            icard.setOnClickListener(this);
+            imath = binding.mainGameintentFast;
+            imath.setOnClickListener(this);
+            ipattern = binding.mainLoginintentRegister;
+            ipattern.setOnClickListener(this);
 
 
-        return root;
+            return root;
         }catch (Exception e){
             Log.e("home","on create view", e);
             throw e;

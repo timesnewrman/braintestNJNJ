@@ -21,6 +21,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,10 +31,9 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
 
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
-    int gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2);
+    int gridSize;
 
-
-    private final Bitmap[][] gridPattern = new Bitmap[gridSize][gridSize];
+    private Bitmap[][] gridPattern;
     ArrayList <Bitmap> elements = new ArrayList<>();
 
     Bitmap brush;
@@ -46,6 +46,8 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
         binding = ActivityGameCardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2);
+        gridPattern = new Bitmap[gridSize][gridSize];
         initCards();
         initGrid();
 
@@ -202,8 +204,11 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
         binding.gameCardStarcount.setText(String.valueOf(stars));
 
         DatabaseUpdater updater = new DatabaseUpdater(CardActivityView.this);
-        updater.increment(stars);
-
+        try {
+            updater.increment(stars);
+        }catch (RuntimeException e){
+            Log.e(TAG, String.valueOf(FirebaseAuth.getInstance().getCurrentUser()) + e.getCause());
+        }
         startActivity(new Intent(CardActivityView.this, MainActivity.class));
     }
 
