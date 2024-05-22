@@ -21,12 +21,13 @@ import com.example.myapplication.databinding.FragmentDashboardBinding;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
     private final String TAG = this.getClass().getSimpleName();
-    private final int[] list = new int[5];
+    private final Integer[] list = new Integer[5];
     private FragmentDashboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,9 +49,9 @@ public class DashboardFragment extends Fragment {
             list[i] = i;
         }
 
-        Log.i(TAG, Arrays.toString(list));
+        Log.e(TAG, Arrays.toString(list)+ Collections.singletonList(list));
 
-        LevelAdapter levelAdapter = new LevelAdapter(getContext(), list);
+        LevelAdapter levelAdapter = new LevelAdapter(getContext(), Arrays.asList(list));
 
         levelView.setLayoutManager(new GridLayoutManager(getContext(),2));
         levelView.setAdapter(levelAdapter);

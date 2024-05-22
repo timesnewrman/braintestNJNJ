@@ -20,8 +20,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
 
     LayoutInflater inflater;
     List<?> levels;
-    public LevelAdapter(Context context, int[] list){
-        this.levels = Collections.singletonList(list);
+    public LevelAdapter(Context context, List<?> list){
+        this.levels = list;
         Log.i("uhuhuh", Collections.singletonList(list).toString());
         this.inflater = LayoutInflater.from(context);
     }

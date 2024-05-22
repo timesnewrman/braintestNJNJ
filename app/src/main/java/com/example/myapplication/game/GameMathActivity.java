@@ -48,7 +48,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
         answerB2.setOnClickListener(this);
         answerB3.setOnClickListener(this);
 
-        initQuestion(true);
+        initQuestion(2);
         initButtons(rand);
     }
 
@@ -61,10 +61,15 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
         answerB3 = binding.mathButton3;
     }
 
-    private void initQuestion(boolean add) {
-
-        if (add) for (int i = 0; i < 2; i++) {
-                elements.add(rand.nextInt(30));
+    private void initQuestion() {
+        questionText.setText(elements.toString());
+        correct = elements.stream().mapToInt(Integer::intValue).sum();
+    }
+    private void initQuestion(int add) {
+        for (int i = 0; i < add; i++) {
+            elements.add(
+                    rand.nextInt(getIntent().getIntExtra("difficuly", 7) * 5)
+            );
         }
 
         questionText.setText(elements.toString());
@@ -121,7 +126,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
                     startActivity(new Intent(GameMathActivity.this, MainActivity.class));
                 } else {
-                    initQuestion(true);
+                    initQuestion(1);
                     initButtons(rand);
                 }
             } else {
@@ -130,7 +135,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
                 elements.remove(1);
                 times++;
-                initQuestion(false);
+                initQuestion();
 
                 initButtons(rand);
             }
