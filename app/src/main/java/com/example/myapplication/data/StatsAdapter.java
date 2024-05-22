@@ -21,9 +21,8 @@ import java.util.List;
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
 
-    FirebaseFirestore fireStore;
     LayoutInflater inflater;
-    List users;
+    List<?> users;
 
     public StatsAdapter(Context context, List<?> users) {
         this.users = users;

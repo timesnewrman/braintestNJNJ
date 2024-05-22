@@ -1,5 +1,4 @@
 package com.example.myapplication.ui.stats;
-//TODO fix the adapter
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

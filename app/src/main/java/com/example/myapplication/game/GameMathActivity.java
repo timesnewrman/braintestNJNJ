@@ -63,14 +63,12 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
     private void initQuestion(boolean add) {
 
-        if (add) {
-            for (int i = 0; i < 2; i++) {
+        if (add) for (int i = 0; i < 2; i++) {
                 elements.add(rand.nextInt(30));
-            }
-
-            questionText.setText(elements.toString());
-            correct = elements.stream().mapToInt(Integer::intValue).sum();
         }
+
+        questionText.setText(elements.toString());
+        correct = elements.stream().mapToInt(Integer::intValue).sum();
     }
 
     @SuppressLint("SetTextI18n")

@@ -30,7 +30,7 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
 
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
-    int gridSize = rand.nextInt(2)+2;
+    int gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2);
 
 
     private final Bitmap[][] gridPattern = new Bitmap[gridSize][gridSize];
