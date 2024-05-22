@@ -25,7 +25,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     Button icard;
-    Button imath, ipattern;
+    Button imath, ipattern, ipatte2rn;
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,6 +49,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             imath.setOnClickListener(this);
             ipattern = binding.mainLoginintentRegister;
             ipattern.setOnClickListener(this);
+            ipatte2rn = binding.mainLoginintentSignin;
+            ipatte2rn.setOnClickListener(this);
 
 
             return root;

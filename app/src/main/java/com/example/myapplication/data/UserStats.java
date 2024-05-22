@@ -31,13 +31,6 @@ public class UserStats {
         this.avatar = base64toAvatar(avatar);
     }
 
-
-    public UserStats(Bitmap avatar, String username, int stars) {
-        this.username = username;
-        this.stars = stars;
-        this.avatar = avatar;
-    }
-
     public UserStats(String username, String userid) {
         this.username = username;
         this.userid = userid;
