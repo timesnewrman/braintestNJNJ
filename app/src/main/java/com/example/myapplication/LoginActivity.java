@@ -16,7 +16,7 @@ import com.example.myapplication.data.UserStats;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -121,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        FirebaseFirestore database = FirebaseFirestore.getInstance();
 
                         DatabaseUpdater upload = new DatabaseUpdater(LoginActivity.this);
                         try {
@@ -160,14 +159,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void exitActivity(FirebaseUser user) {
-        String username = String.valueOf(usernameView.getText());
-
         Intent i = new Intent(LoginActivity.this, MainActivity.class)
                 .putExtra("user", user);
         binding = null;
         startActivity(i);
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -181,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         errorView.setVisibility(View.VISIBLE);
         errorView.setText(getString(R.string.login_failed)
                 + errorExplanationText.get(Objects.requireNonNull(err.getClass().getName()))
-                +err.toString());
+                + err);
 
         Log.e(TAG, Arrays.toString(err.getStackTrace()));
         Log.e(TAG, err.toString());

@@ -1,11 +1,6 @@
 package com.example.myapplication.game;
 
-import static android.app.PendingIntent.getActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,17 +9,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameMathBinding;
-import com.example.myapplication.game.card.CardActivityView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameMathActivity extends AppCompatActivity implements View.OnClickListener{
-    private String TAG = this.getClass().getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
     ActivityGameMathBinding binding;
     Random rand = new Random();
     TextView questionText;
@@ -105,7 +101,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "user clicked on activity here: "+v.getClass().toString());
+        Log.d(TAG, "user clicked on activity here: "+ v.getClass());
         if (v == findViewById(R.id.math_button)
                 || v == findViewById(R.id.math_button2)
                 || v == findViewById(R.id.math_button3))
@@ -120,7 +116,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                 times--;
                 if (times == 0)
                 {
-                    Toast.makeText(GameMathActivity.this, "congrats! you have "+Integer.toString(points)+" points now", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameMathActivity.this, "congrats! you have "+ points +" points now", Toast.LENGTH_SHORT).show();
 
                     DatabaseUpdater updater = new DatabaseUpdater(GameMathActivity.this);
                     updater.increment(points);

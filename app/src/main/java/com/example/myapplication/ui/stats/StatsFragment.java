@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.stats;
 //TODO fix the adapter
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,23 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.DialogPreference;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.data.StatsAdapter;
 import com.example.myapplication.data.UserStats;
 import com.example.myapplication.databinding.FragmentStatsBinding;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class StatsFragment extends Fragment {
-    private Exception exception;
     private FragmentStatsBinding binding;
     TextView errorView;
     ArrayList<Object> databaseSave = new ArrayList<>();
