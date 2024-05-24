@@ -17,17 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.data.StatsAdapter;
 import com.example.myapplication.data.UserStats;
 import com.example.myapplication.databinding.FragmentStatsBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class StatsFragment extends Fragment {
     private FragmentStatsBinding binding;
     TextView errorView;
     ArrayList<Object> databaseSave = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
+    private UserStats currentUser;
     private final FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -64,19 +68,28 @@ public class StatsFragment extends Fragment {
     }
 
     private void fetchDatabase(RecyclerView statsView){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+
+        fireStore.collection("users").document(userId).get()
+                        .addOnSuccessListener(task -> {
+                            currentUser = new UserStats(Objects.requireNonNull(task.getData()));
+                        });
+
         fireStore.collection("users")
+                .whereGreaterThan("stars", 0)
+                .orderBy("stars", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(task -> {
                     for (DocumentSnapshot document : task.getDocuments()){
-                        databaseSave.add(new UserStats
-                                        ((Objects.requireNonNull(document.getData())),
-                                        this.getActivity())
+                        databaseSave.add(
+                                new UserStats(Objects.requireNonNull(document.getData()))
                         );
                         Log.i(TAG, "added");
                     }
                     Log.i(TAG, databaseSave.toString());
 
-                    StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave);
+                    StatsAdapter statsAdapter = new StatsAdapter(getActivity(), databaseSave, currentUser);
 
                     statsView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     statsView.setAdapter(statsAdapter);

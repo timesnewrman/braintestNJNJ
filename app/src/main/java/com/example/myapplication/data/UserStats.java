@@ -9,6 +9,7 @@ import com.example.myapplication.R;
 
 import java.util.Base64;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class UserStats {
@@ -36,7 +37,7 @@ public class UserStats {
         this.userid = userid;
     }
 
-    public UserStats(Map<String, Object> map, Context context) {
+    public UserStats(Map<String, Object> map) {
         this.username = (String) map.getOrDefault("username", null);
         this.stars = map.getOrDefault("stars", 0);
         this.avatar = base64toAvatar((String) map.getOrDefault("avatar", null));
@@ -65,4 +66,5 @@ public class UserStats {
         byte [] decoded = Base64.getDecoder().decode(encodedAvatar);
         return  BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
     }
+
 }

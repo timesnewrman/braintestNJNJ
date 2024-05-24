@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
@@ -20,13 +21,15 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
-
+    Context context;
     LayoutInflater inflater;
     List<?> users;
+    UserStats currentUser;
 
-    public StatsAdapter(Context context, List<?> users) {
+    public StatsAdapter(Context context, List<?> users, UserStats currentUser) {
         this.users = users;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
         Log.i("StatsAdapter", "initialised stats adapter");
     }
 
@@ -59,6 +62,12 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         holder.avatar.setImageBitmap(user.avatar);
         holder.username.setText(user.username);
         holder.stars.setText(user.stars == null ? "0" : user.stars.toString());
+
+        if (user == currentUser) {
+            holder.itemView.setBackgroundColor(context.getColor(R.color.accent));
+            holder.username.setTextColor(context.getColor(R.color.white));
+            holder.stars.setTextColor(context.getColor(R.color.white));
+        }
 
         Log.i("StatsAdapter", "binded view holder");
     }
