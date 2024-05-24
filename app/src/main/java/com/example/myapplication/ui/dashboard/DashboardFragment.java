@@ -32,7 +32,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
 
-        //TODO course menu like duolingo
+
         displayAdapterView();
         return binding.getRoot();
     }
