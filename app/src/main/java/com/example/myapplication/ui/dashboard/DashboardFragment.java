@@ -55,11 +55,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        //TODO finishing touches to the layout
         if (v.getClass() == ConstraintLayout.class){
             ConstraintLayout button = (ConstraintLayout) v;
             int seed = Integer.parseInt(((TextView) button.getChildAt(0)).getText().toString());
             Level level = new Level(seed);
             level.start(DashboardFragment.this.getContext());
         }
+        Log.i(TAG, v.getClass()+" was clicked");
     }
 }

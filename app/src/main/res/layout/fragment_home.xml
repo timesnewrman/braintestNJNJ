@@ -7,196 +7,191 @@
     android:layout_margin="16dp"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:cardBackgroundColor="@color/accent"
-                app:cardCornerRadius="16dp">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/home_cardtitle_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/challenge_of_the_day"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:cardBackgroundColor="@color/accent"
+                        app:cardCornerRadius="16dp">
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginTop="16dp"
-                        android:src="@tools:sample/avatars"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/baseline_grade_24"
-                        app:tint="@color/white" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="16dp">
 
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/button_background"
-                        android:text="@string/go"
-                        android:textColor="@color/dark"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/baseline_grade_24"
+                                app:tint="@color/white" />
 
-            </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:id="@+id/home_cardtitle_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/challenge_of_the_day"
+                                android:textColor="@color/white"
+                                android:textSize="24sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+                            <Button
+                                android:id="@+id/button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/button_background"
+                                android:text="@string/go"
+                                android:textColor="@color/dark"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:cardBackgroundColor="@color/card_background"
+                        app:cardCornerRadius="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/home_cardtitle_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder"
+                                android:textColor="@color/dark"
+                                android:textSize="24sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_marginTop="16dp"
+
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/baseline_grade_24"
+                                app:tint="@color/dark" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <Space
-                android:layout_width="12dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="16dp">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
-                    <TextView
-                        android:id="@+id/home_cardtitle_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/placeholder"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
 
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginTop="16dp"
-                        android:src="@tools:sample/avatars"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/baseline_grade_24"
-                        app:tint="@color/white" />
+            <Button
+                android:id="@+id/main_gameintent_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:padding="24dp"
+                android:text="@string/blitz_card"
+                android:textColor="@color/dark" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/main_gameintent_fast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:padding="24dp"
+                android:text="@string/blitz_fast"
+                android:textColor="@color/dark" />
 
-            </androidx.cardview.widget.CardView>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <Button
+                android:id="@+id/main_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:padding="24dp"
+                android:text="settings"
+                android:textColor="@color/dark" />
+
+            <Button
+                android:id="@+id/main_loginintent_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:padding="24dp"
+                android:text="log out and create another user"
+                android:textColor="@color/dark" />
+
+            <Button
+                android:id="@+id/main_loginintent_signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:padding="24dp"
+                android:text="log out and login through an existing account"
+                android:textColor="@color/dark" />
 
         </LinearLayout>
+    </ScrollView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="28dp" />
-
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <Button
-            android:id="@+id/main_gameintent_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_background"
-            android:padding="24dp"
-            android:text="@string/blitz_card"
-            android:textColor="@color/dark" />
-
-        <Button
-            android:id="@+id/main_gameintent_fast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_background"
-            android:padding="24dp"
-            android:text="@string/blitz_fast"
-            android:textColor="@color/dark" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <Button
-            android:id="@+id/main_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_background"
-            android:padding="24dp"
-            android:text="settings"
-            android:textColor="@color/dark" />
-
-        <Button
-            android:id="@+id/main_loginintent_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_background"
-            android:padding="24dp"
-            android:text="log out and create another user"
-            android:textColor="@color/dark" />
-
-        <Button
-            android:id="@+id/main_loginintent_signin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_background"
-            android:padding="24dp"
-            android:text="log out and login through an existing account"
-            android:textColor="@color/dark" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
