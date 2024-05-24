@@ -3,4 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="announcement">#FFFF0000</color>
+    <color name="dark">#131317</color>
+    <color name="accent">#EC407A</color>
+    <color name="accent2">#00BFA5</color>
+    <color name="logo">#9515F9</color>
+    <color name="card_background">#9FA8DA</color>
+    <color name="button_background">#D8D5DB</color>
 </resources>

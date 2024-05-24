@@ -72,7 +72,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
             );
         }
 
-        questionText.setText(elements.toString());
+        questionText.setText(toPresentableText(elements));
         correct = elements.stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -140,5 +140,16 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                 initButtons(rand);
             }
         }
+    }
+
+    public static String toPresentableText(ArrayList<Integer> arr) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arr.size(); i++) {
+            sb.append(arr.get(i));
+            if (i < arr.size() - 1) {
+                sb.append("+");
+            }
+        }
+        return sb.toString();
     }
 }
