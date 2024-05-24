@@ -59,6 +59,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed. "</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="blitz_card">blitz card</string>
+    <string name="blitz_fast">blitz fast</string>
+    <string name="challenge_of_the_day">Challenge of the day</string>
+    <string name="go">Go!</string>
+    <string name="placeholder">placeholder</string>
 
 
 </resources>
