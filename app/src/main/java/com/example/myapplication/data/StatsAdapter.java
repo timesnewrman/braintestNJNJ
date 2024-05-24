@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Objects;
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder>{
     Context context;
@@ -30,6 +31,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         this.users = users;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
+        this.currentUser = currentUser;
         Log.i("StatsAdapter", "initialised stats adapter");
     }
 
@@ -63,7 +65,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         holder.username.setText(user.username);
         holder.stars.setText(user.stars == null ? "0" : user.stars.toString());
 
-        if (user == currentUser) {
+        if (Objects.equals(user, currentUser)) {
             holder.itemView.setBackgroundColor(context.getColor(R.color.accent));
             holder.username.setTextColor(context.getColor(R.color.white));
             holder.stars.setTextColor(context.getColor(R.color.white));

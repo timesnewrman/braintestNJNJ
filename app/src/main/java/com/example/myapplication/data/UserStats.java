@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
+import androidx.annotation.NonNull;
+
 import com.example.myapplication.R;
 
 import java.util.Base64;

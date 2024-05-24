@@ -72,10 +72,10 @@ public class StatsFragment extends Fragment {
         String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
         fireStore.collection("users").document(userId).get()
-                        .addOnSuccessListener(task -> {
-                            currentUser = new UserStats(Objects.requireNonNull(task.getData()));
-                        });
-
+                        .addOnSuccessListener(
+                                task -> currentUser = new UserStats(Objects.requireNonNull(task.getData()))
+                        );
+        Log.i(TAG, currentUser.toString());
         fireStore.collection("users")
                 .whereGreaterThan("stars", 0)
                 .orderBy("stars", Query.Direction.DESCENDING)
