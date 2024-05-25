@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.dashboard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +26,9 @@ import java.util.Objects;
 public class DashboardFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
-    private final ArrayList<Integer> list = new ArrayList<Integer>();
+    private final ArrayList<Integer> list = new ArrayList<>();
+    private final SharedPreferences level
+            = requireActivity().getSharedPreferences("level", Context.MODE_PRIVATE);
     private FragmentDashboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,7 +46,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         RecyclerView levelView = binding.dashboardRecyclerview;
 
-        for (int i=0; i<111; i++) list.add(i);
+        for (int i=0; i<level.getInt("level", 1); i++) list.add(i);
 
         LevelAdapter levelAdapter = new LevelAdapter(getContext(), list, this);
 

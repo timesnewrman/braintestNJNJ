@@ -205,7 +205,7 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
 
         DatabaseUpdater updater = new DatabaseUpdater(CardActivityView.this);
         try {
-            updater.increment(stars);
+            updater.increment(stars, getIntent());
         }catch (RuntimeException e){
             Log.e(TAG, String.valueOf(FirebaseAuth.getInstance().getCurrentUser()) + e.getCause());
         }

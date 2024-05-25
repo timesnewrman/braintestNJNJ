@@ -25,7 +25,7 @@ public class Level {
         this.activity = Arrays.asList(
                 CardActivityView.class,
                 GameMathActivity.class
-        ).get(rand.nextInt(1));
+        ).get(seed%2);
     }
     public Level(int seed, int difficulty, Object activity){
         this.seed = seed;
@@ -40,7 +40,7 @@ public class Level {
         this.activity = Arrays.asList(
                 CardActivityView.class,
                 GameMathActivity.class
-        ).get(rand.nextInt(1));
+        ).get(seed%2);
     }
 
 
@@ -48,7 +48,8 @@ public class Level {
 
         Intent starter = new Intent(context, (Class<?>) activity);
          starter.putExtra("difficulty", rand.nextInt())
-                .putExtra("seed", seed);
+                .putExtra("seed", seed)
+                .putExtra("levelClass", true);
         context.startActivity(starter);
 
     }

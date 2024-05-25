@@ -123,7 +123,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(GameMathActivity.this, "congrats! you have "+ points +" points now", Toast.LENGTH_SHORT).show();
 
                     DatabaseUpdater updater = new DatabaseUpdater(GameMathActivity.this);
-                    updater.increment(points);
+                    updater.increment(points, getIntent());
 
                     startActivity(new Intent(GameMathActivity.this, MainActivity.class));
                 } else {
