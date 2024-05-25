@@ -42,6 +42,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
         initViews();
 
+        pointText.setText(String.valueOf(0));
         times = rand.nextInt(5)+2;
 
         answerB1.setOnClickListener(this);

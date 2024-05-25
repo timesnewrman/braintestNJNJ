@@ -70,12 +70,13 @@ public class StatsFragment extends Fragment {
     private void fetchDatabase(RecyclerView statsView){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+        //TODO fix the fucking currentuser still being null PAINFUL I KNOW
 
         fireStore.collection("users").document(userId).get()
                         .addOnSuccessListener(
-                                task -> currentUser = new UserStats(Objects.requireNonNull(task.getData()))
+                                task -> {currentUser = new UserStats(Objects.requireNonNull(task.getData()));}
                         );
-        Log.i(TAG, currentUser.toString());
+        Log.i(TAG, String.valueOf(Objects.isNull(currentUser)));
         fireStore.collection("users")
                 .whereGreaterThan("stars", 0)
                 .orderBy("stars", Query.Direction.DESCENDING)

@@ -19,6 +19,7 @@ import com.example.myapplication.data.LevelAdapter;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener {
 
@@ -43,10 +44,12 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         for (int i=0; i<111; i++) list.add(i);
 
-        LevelAdapter levelAdapter = new LevelAdapter(getContext(), list);
+        LevelAdapter levelAdapter = new LevelAdapter(getContext(), list, this);
 
         levelView.setLayoutManager(new GridLayoutManager(getContext(),2));
         levelView.setAdapter(levelAdapter);
+
+        levelView.smoothScrollToPosition(list.size()-1);
     }
     @Override
     public void onDestroyView() {
@@ -56,13 +59,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        Log.i(TAG, v.getClass()+" was clicked");
         //TODO finishing touches to the layout
         if (v.getClass() == ConstraintLayout.class){
             ConstraintLayout button = (ConstraintLayout) v;
             int seed = Integer.parseInt(((TextView) button.getChildAt(0)).getText().toString());
-            Level level = new Level(seed);
+            int difficulty = Integer.parseInt(((TextView) button.getChildAt(1)).getText().toString());
+            Level level = new Level(seed, difficulty);
             level.start(DashboardFragment.this.getContext());
         }
-        Log.i(TAG, v.getClass()+" was clicked");
+
     }
 }

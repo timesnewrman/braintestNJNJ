@@ -34,11 +34,17 @@ public class DatabaseUpdater {
     }
 
     public void increment(int stars) {
+        checkUser();
         database.collection("users")
                 .document(userID)
                 .update("stars", FieldValue.increment(stars))
                 .addOnFailureListener(err -> {
                     throw new RuntimeException(err);
                 });
+    }
+
+    private void checkUser() {
+        if (Objects.isNull(fireAuth.getCurrentUser()))
+            throw new RuntimeException("current user is null");
     }
 }
