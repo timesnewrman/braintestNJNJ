@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -143,11 +144,15 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void initCards() {
-        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_apple));
-        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_banana));
-        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_blueberries));
-        elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_cherry));
+        for (int i = 0; i<rand.nextInt();i++) {
+            Integer drawable = Arrays.asList(
+                    R.drawable.card_apple,
+                    R.drawable.card_cherry,
+                    R.drawable.card_graple,
+                    R.drawable.card_lemon).get(i);
+            elements.add(BitmapFactory.decodeResource(this.getResources(), drawable));
 
+        }
 
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_back));
     }
