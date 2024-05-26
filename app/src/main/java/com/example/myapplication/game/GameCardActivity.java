@@ -61,7 +61,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
         );
 
         gridSize = Math.max(
-                getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)/2%5,
+                getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)%5,
                 2);
         Log.i(TAG, String.valueOf(gridSize));
 
@@ -144,14 +144,19 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void initCards() {
-        for (int i = 0; i<rand.nextInt(3);i++) {
+        int uniqueCards =
+                Objects.equals(getIntent().getExtras().get("scenario"), Level.scenario.FROM_CHALLENGE)?
+                4 : getIntent().getExtras().getInt("difficulty", rand.nextInt(4))%4+1;
+        Log.i(TAG, String.valueOf(uniqueCards));
+
+
+        for (int i = 0; i<uniqueCards;i++) {
             Integer drawable = Arrays.asList(
                     R.drawable.card_apple,
                     R.drawable.card_cherry,
                     R.drawable.card_graple,
                     R.drawable.card_lemon).get(i);
             elements.add(BitmapFactory.decodeResource(this.getResources(), drawable));
-
         }
 
         elements.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.card_back));
