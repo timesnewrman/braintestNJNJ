@@ -31,6 +31,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
     Button answerB1, answerB2, answerB3;
     ArrayList<Integer> elements = new ArrayList<>();
     int times;
+    int total;
     int correct;
     int points;
 
@@ -47,6 +48,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
         pointText.setText(String.valueOf(0));
         times = rand.nextInt(5)+2;
+        total += times;
 
         answerB1.setOnClickListener(this);
         answerB2.setOnClickListener(this);
@@ -130,7 +132,11 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
                     FragmentManager manager = getSupportFragmentManager();
                     AlertDialogFragment dialog =
-                            new AlertDialogFragment("you have "+String.valueOf(points)+" stars now!", "OK");
+                            new AlertDialogFragment(
+                                    "You have earned"
+                                    +String.valueOf(points)
+                                    + " stars out of "
+                                    +String.valueOf(total), "OK");
 
                     dialog.ifSucsessful(() -> {
                         Log.i(TAG, "closed");
@@ -146,7 +152,6 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                 pointText.setText(Integer.toString(points));
 
                 elements.remove(1);
-                times++;
 
                 if (elements.size()<2) {initQuestion(1);} else {initQuestion();}
 

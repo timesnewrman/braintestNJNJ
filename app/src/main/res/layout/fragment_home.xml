@@ -62,6 +62,19 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/home_cardtitle_1" />
 
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="TextView"
+                        android:textColor="@color/white"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/home_cardtitle_1"
+                        app:layout_constraintStart_toEndOf="@+id/imageView5"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -98,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
-                        android:text="@string/challenge_of_the_day"
+                        android:text="@string/placeholder"
                         android:textColor="@color/dark"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView4"
@@ -170,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/button_background"
                 android:padding="24dp"
-                android:text="log out and create another user"
+                android:text="@string/action_sign_out_short"
                 android:textColor="@color/dark" />
 
         </LinearLayout>

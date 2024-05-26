@@ -219,7 +219,11 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
             FragmentManager manager = getSupportFragmentManager();
             AlertDialogFragment dialog =
-                    new AlertDialogFragment("you have "+String.valueOf(stars)+" stars now!", "OK");
+                    new AlertDialogFragment(
+                            "You have earned "
+                            +String.valueOf(stars)
+                            +" out of "
+                            +String.valueOf(30*gridSize*gridSize), "OK");
 
             dialog.ifSucsessful(()-> startActivity(new Intent(thisC, MainActivity.class)));
             dialog.show(manager, "myDialog");
