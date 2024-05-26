@@ -144,7 +144,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void initCards() {
-        for (int i = 0; i<rand.nextInt();i++) {
+        for (int i = 0; i<rand.nextInt(3);i++) {
             Integer drawable = Arrays.asList(
                     R.drawable.card_apple,
                     R.drawable.card_cherry,
