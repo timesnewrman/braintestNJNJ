@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (v == imath){
             Intent i2 = new Intent(getActivity(), GameMathActivity.class)
                     .putExtra("scenario", Level.scenario.NO_STARS)
-                    .putExtra("difficulty", difficulty*5);
+                    .putExtra("difficulty", difficulty*2);
             startActivity(i2);
         }
         if (v == ilogin){

@@ -74,7 +74,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
     private void initQuestion(int add) {
         for (int i = 0; i < add; i++) {
             elements.add(
-                    rand.nextInt(getIntent().getIntExtra("difficuly", 7) * 5)
+                    rand.nextInt(getIntent().getIntExtra("difficuly", 7)*3)
             );
         }
 
@@ -132,7 +132,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                     FragmentManager manager = getSupportFragmentManager();
                     AlertDialogFragment dialog =
                             new AlertDialogFragment(
-                                    "You have earned"
+                                    "You have earned "
                                     +String.valueOf(points)
                                     + " stars out of "
                                     +String.valueOf(total*30), "OK");
