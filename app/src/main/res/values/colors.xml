@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="announcement">#FFFF0000</color>
+    <color name="error">#FFFF0000</color>
     <color name="dark">#131317</color>
     <color name="accent">#EC407A</color>
     <color name="accent2">#00BFA5</color>

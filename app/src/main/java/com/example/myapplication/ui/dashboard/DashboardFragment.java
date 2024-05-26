@@ -65,9 +65,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         if (v.getClass() == ConstraintLayout.class){
             ConstraintLayout button = (ConstraintLayout) v;
             int number = Integer.parseInt(((TextView) button.getChildAt(0)).getText().toString());
+            Log.i(TAG, String.valueOf(number));
 
             Level.scenario scenario;
-            scenario = (number == list.size()-1) ? Level.scenario.FROM_DASHBOARD: Level.scenario.NONE;
+            scenario = (number == list.size()) ? Level.scenario.FROM_DASHBOARD: Level.scenario.NONE;
             if (number == 1) scenario = Level.scenario.LAUNCH_TUTORIAL;
 
             list.get(number-1).start(getContext(), scenario);

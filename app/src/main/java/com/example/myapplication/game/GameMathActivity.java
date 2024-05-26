@@ -3,12 +3,12 @@ package com.example.myapplication.game;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -118,7 +118,6 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
             Button clickedButton = (Button) v;
             if (Integer.parseInt(clickedButton.getText().toString()) == correct)
             {
-                Toast.makeText(GameMathActivity.this,"correct", Toast.LENGTH_SHORT).show();
                 points += 30;
                 pointText.setText(Integer.toString(points));
 
@@ -150,6 +149,12 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
             } else {
                 points -= 20;
                 pointText.setText(Integer.toString(points));
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
                 elements.remove(1);
 
