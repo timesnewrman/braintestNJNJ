@@ -86,10 +86,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int difficulty = binding.difficultyBar.getProgress();
+        Log.i("diff", String.valueOf(difficulty));
         if (v == icard){
             Intent i = new Intent(getActivity(), GameCardActivity.class)
                     .putExtra("scenario", Level.scenario.NO_STARS)
-                    .putExtra("difficulty", difficulty);
+                    .putExtra("gridsize", (difficulty/2)+2);
             startActivity(i);
         }
         if (v == imath){

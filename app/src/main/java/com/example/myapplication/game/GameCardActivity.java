@@ -53,17 +53,23 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
         binding = ActivityGameCardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         tutorial = Objects.equals(
                 Objects.requireNonNull(getIntent().getExtras()).get("scenario"),
                 Level.scenario.LAUNCH_TUTORIAL
         );
 
         gridSize = Math.max(
-                getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)%4,
+                getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)/2%5,
                 2);
+        Log.i(TAG, String.valueOf(gridSize));
+
+        int gridSizeintent = getIntent().getIntExtra("gridsize", 0);
+        if (gridSizeintent!=0) gridSize = gridSizeintent;
+
         if (tutorial) gridSize = 1;
 
-        Log.i(TAG, String.valueOf(gridSize));
+        Log.i(TAG, String.valueOf(gridSize)+" "+ String.valueOf(gridSizeintent));
         gridPattern = new Bitmap[gridSize][gridSize];
         initCards();
         initGrid();

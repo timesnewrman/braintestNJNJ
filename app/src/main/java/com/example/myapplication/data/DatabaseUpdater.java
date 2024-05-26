@@ -3,6 +3,7 @@ package com.example.myapplication.data;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
@@ -40,15 +41,18 @@ public class DatabaseUpdater {
 
     public void increment(int stars, Intent intent) {
         checkUser();
-        if (Objects.equals(Objects.requireNonNull(intent.getExtras()).get("scenario"),Level.scenario.FROM_CHALLENGE)) {
+        Level.scenario scenario = (Level.scenario) Objects.requireNonNull(intent.getExtras()).get("scenario");
+        if (Objects.equals(scenario,Level.scenario.FROM_CHALLENGE)) {
             stars *= 3;
         }
-        database.collection("users")
+        if (!Objects.equals(scenario,Level.scenario.NO_STARS)) database.collection("users")
                 .document(userID)
                 .update("stars", FieldValue.increment(stars))
                 .addOnFailureListener(err -> {
                     throw new RuntimeException(err);
-                });
+                }); else {
+            Toast.makeText(context, "Remember, you won't earn stars in training mode", Toast.LENGTH_LONG).show();
+        }
         if (Objects.equals(Objects.requireNonNull(intent.getExtras()).get("scenario"),Level.scenario.FROM_DASHBOARD)) {
             SharedPreferences data = context.getSharedPreferences("level", Context.MODE_PRIVATE);
             data.edit().putInt("level", data.getInt("level",2)+1).apply();
