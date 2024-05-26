@@ -25,13 +25,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
     Context context;
     LayoutInflater inflater;
     List<?> users;
-    UserStats currentUser;
+    String currentUserId;
 
-    public StatsAdapter(Context context, List<?> users, UserStats currentUser) {
+    public StatsAdapter(Context context, List<?> users, String userId) {
         this.users = users;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
-        this.currentUser = currentUser;
+        this.currentUserId = userId;
         Log.i("StatsAdapter", "initialised stats adapter");
     }
 
@@ -39,11 +39,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         final ImageView avatar;
         final TextView username;
         final TextView stars;
+        final TextView number;
         public StatsViewHolder(@NonNull View itemView) {
             super(itemView);
             this.avatar = itemView.findViewById(R.id.StatsitemImageView);
             this.username = itemView.findViewById(R.id.StatsitemTextView);
             this.stars = itemView.findViewById(R.id.StatsitemStarCount);
+            this.number = itemView.findViewById(R.id.StatsItemNumber);
             Log.i("StatsAdapter", "initialised stats viewHolder");
         }
     }
@@ -64,11 +66,18 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
         holder.avatar.setImageBitmap(user.avatar);
         holder.username.setText(user.username);
         holder.stars.setText(user.stars == null ? "0" : user.stars.toString());
+        holder.number.setText(String.valueOf(position+1));
 
-        if (Objects.equals(user, currentUser)) {
+        if (Objects.equals(user.getUserid(), currentUserId)) {
             holder.itemView.setBackgroundColor(context.getColor(R.color.accent));
             holder.username.setTextColor(context.getColor(R.color.white));
             holder.stars.setTextColor(context.getColor(R.color.white));
+            holder.number.setTextColor(context.getColor(R.color.white));
+        } else {
+            holder.itemView.setBackgroundColor(context.getColor(R.color.card_background));
+            holder.username.setTextColor(context.getColor(R.color.dark));
+            holder.stars.setTextColor(context.getColor(R.color.dark));
+            holder.number.setTextColor(context.getColor(R.color.dark));
         }
 
         Log.i("StatsAdapter", "binded view holder");

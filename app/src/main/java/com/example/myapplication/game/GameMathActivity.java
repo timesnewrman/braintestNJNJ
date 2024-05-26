@@ -136,7 +136,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                                     "You have earned"
                                     +String.valueOf(points)
                                     + " stars out of "
-                                    +String.valueOf(total), "OK");
+                                    +String.valueOf(total*30), "OK");
 
                     dialog.ifSucsessful(() -> {
                         Log.i(TAG, "closed");

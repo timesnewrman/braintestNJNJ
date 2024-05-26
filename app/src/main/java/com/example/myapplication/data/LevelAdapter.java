@@ -50,7 +50,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
         Random rand = new Random(position);
         holder.desc.setText(
                         context.getString(R.string.level_item_difficultytext)
-                        + (position % 20 + 3) + " "
+                        + (position % 19 + 3) + " "
                         + Arrays.asList(
                                 context.getString(R.string.blitz_card),
                                 context.getString(R.string.blitz_fast)

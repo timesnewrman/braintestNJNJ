@@ -44,8 +44,8 @@ public class AlertDialogFragment extends DialogFragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setCancelable(false)
 				.setTitle(title);
-		if (!Objects.isNull(runnable)) builder.setPositiveButton(positive, (dialog, id) -> {
-			this.runnable.run();
+		builder.setPositiveButton(positive, (dialog, id) -> {
+			if (!Objects.isNull(runnable)) this.runnable.run();
 			dialog.dismiss();
 		});
 		builder.setNegativeButton(negative, (dialog, id) -> {

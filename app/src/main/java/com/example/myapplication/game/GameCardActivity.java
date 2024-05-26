@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -22,12 +23,14 @@ import androidx.gridlayout.widget.GridLayout;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
+import com.example.myapplication.data.Level;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
 import com.example.myapplication.ui.AlertDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class GameCardActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,6 +38,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
     int gridSize;
+    private boolean tutorial;
 
     private Bitmap[][] gridPattern;
     ArrayList <Bitmap> elements = new ArrayList<>();
@@ -49,8 +53,16 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
         binding = ActivityGameCardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)%4;
-        if (gridSize == 0) gridSize = 3;
+        tutorial = Objects.equals(
+                Objects.requireNonNull(getIntent().getExtras()).get("scenario"),
+                Level.scenario.LAUNCH_TUTORIAL
+        );
+
+        gridSize = Math.max(
+                getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)%4,
+                2);
+        if (tutorial) gridSize = 1;
+
         Log.i(TAG, String.valueOf(gridSize));
         gridPattern = new Bitmap[gridSize][gridSize];
         initCards();
@@ -70,6 +82,11 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
             public void run() {
                 super.run();
                 try {
+                    if (tutorial) GameCardActivity.this.runOnUiThread(
+                            () -> Toast.makeText(GameCardActivity.this
+                                    ,"Remember the picture!"
+                                    , Toast.LENGTH_SHORT).show()
+                    );
                     Thread.sleep(3000L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -77,7 +94,14 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
                 displayPalette();
                 vipeOut();
                 GameCardActivity.this.runOnUiThread(
-                        () -> binding.gameCardButton.setVisibility(View.VISIBLE));
+                        () -> {
+                            binding.gameCardButton.setVisibility(View.VISIBLE);
+                            if (tutorial) {
+                                new AlertDialogFragment(
+                                        "Choose the picture at the top of the screen...","OK"
+                                ).show(GameCardActivity.this.getSupportFragmentManager(),"alerttutor_1");
+                            }
+                        });
             }
 
             private void vipeOut() {
@@ -180,6 +204,9 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
             if (v.getClass() == ImageButton.class){
                 ImageButton view = (ImageButton) v;
                 brush = ((BitmapDrawable)view.getDrawable()).getBitmap();
+                if (tutorial) new AlertDialogFragment(
+                        "Then click on the card to set it to your selected fruit!", "OK"
+                ).show(GameCardActivity.this.getSupportFragmentManager(),"alerttutor_2");
             }
             if (v == binding.gameCardButton){
                 checkCard();
@@ -222,7 +249,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
                     new AlertDialogFragment(
                             "You have earned "
                             +String.valueOf(stars)
-                            +" out of "
+                            +" stars out of "
                             +String.valueOf(30*gridSize*gridSize), "OK");
 
             dialog.ifSucsessful(()-> startActivity(new Intent(thisC, MainActivity.class)));

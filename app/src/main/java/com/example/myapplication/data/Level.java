@@ -20,7 +20,7 @@ public class Level {
     public enum scenario{
         FROM_DASHBOARD,
         FROM_CHALLENGE,
-        NONE;
+        NONE, LAUNCH_TUTORIAL;
     }
     public Level(int seed, int difficulty){
         this.seed = seed;
@@ -41,7 +41,7 @@ public class Level {
     public Level(int seed) {
         this.seed = seed;
         rand.setSeed(seed);
-        this.difficulty=seed%20+3;
+        this.difficulty=seed%19+3;
         this.activity = Arrays.asList(
                 GameCardActivity.class,
                 GameMathActivity.class

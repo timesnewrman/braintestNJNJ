@@ -18,7 +18,7 @@
         android:layout_marginBottom="5dp"
         android:src="@drawable/layout_blank"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/StatsItemNumber"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -53,5 +53,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_grade_24" />
+
+    <TextView
+        android:id="@+id/StatsItemNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
