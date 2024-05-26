@@ -36,8 +36,6 @@ public class StatsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        StatsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(StatsViewModel.class);
 
         binding = FragmentStatsBinding.inflate(inflater, container, false);
 

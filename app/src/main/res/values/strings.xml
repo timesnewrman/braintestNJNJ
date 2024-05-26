@@ -64,6 +64,7 @@
     <string name="challenge_of_the_day">Challenge of the day</string>
     <string name="go">Go!</string>
     <string name="placeholder">placeholder</string>
+    <string name="challenge_completed">Challenge completed</string>
 
 
 </resources>

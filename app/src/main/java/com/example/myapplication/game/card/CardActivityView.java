@@ -46,7 +46,9 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
         binding = ActivityGameCardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2);
+        gridSize = getIntent().getIntExtra("difficulty",rand.nextInt(2)+2)%4;
+        if (gridSize == 0) gridSize = 3;
+        Log.i(TAG, String.valueOf(gridSize));
         gridPattern = new Bitmap[gridSize][gridSize];
         initCards();
         initGrid();

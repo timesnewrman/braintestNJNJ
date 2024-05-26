@@ -40,16 +40,20 @@ public class DatabaseUpdater {
 
     public void increment(int stars, Intent intent) {
         checkUser();
+        if (Objects.equals(Objects.requireNonNull(intent.getExtras()).get("scenario"),Level.scenario.FROM_CHALLENGE)) {
+            stars *= 3;
+        }
         database.collection("users")
                 .document(userID)
                 .update("stars", FieldValue.increment(stars))
                 .addOnFailureListener(err -> {
                     throw new RuntimeException(err);
                 });
-        if (intent.getBooleanExtra("levelClass", false)) {
+        if (Objects.equals(Objects.requireNonNull(intent.getExtras()).get("scenario"),Level.scenario.FROM_DASHBOARD)) {
             SharedPreferences data = context.getSharedPreferences("level", Context.MODE_PRIVATE);
-            data.edit().putInt("level", data.getInt("level",1)+1).apply();
+            data.edit().putInt("level", data.getInt("level",2)+1).apply();
         }
+
     }
 
     private void checkUser() {

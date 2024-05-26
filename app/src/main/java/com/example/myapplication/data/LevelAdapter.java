@@ -42,12 +42,14 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
     @Override
     public void onBindViewHolder(@NonNull LevelViewHolder holder, int position) {
 
-        holder.stars.setText(String.valueOf(position));
+        holder.stars.setText(String.valueOf(position+1));
         Random rand = new Random(position);
         holder.desc.setText(String.valueOf(rand.nextInt(position+1)));
 
         if (position == levels.size()-1) {
             holder.itemView.setBackgroundColor(context.getColor(R.color.accent));
+        } else {
+            holder.itemView.setBackgroundColor(context.getColor(R.color.card_background));
         }
     }
 

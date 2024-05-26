@@ -27,17 +27,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     private final String TAG = this.getClass().getSimpleName();
     private final ArrayList<Integer> list = new ArrayList<>();
-    private final SharedPreferences level
-            = requireActivity().getSharedPreferences("level", Context.MODE_PRIVATE);
+    private SharedPreferences localData;
+
     private FragmentDashboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
-
+        localData = requireActivity().getSharedPreferences("level", Context.MODE_PRIVATE);
 
         displayAdapterView();
         return binding.getRoot();
@@ -46,7 +44,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         RecyclerView levelView = binding.dashboardRecyclerview;
 
-        for (int i=0; i<level.getInt("level", 1); i++) list.add(i);
+        Log.i(TAG, String.valueOf(localData.getInt("level", 666)));
+        for (int i=0; i<localData.getInt("level", 1); i++) list.add(i);
 
         LevelAdapter levelAdapter = new LevelAdapter(getContext(), list, this);
 
@@ -67,10 +66,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         //TODO finishing touches to the layout
         if (v.getClass() == ConstraintLayout.class){
             ConstraintLayout button = (ConstraintLayout) v;
-            int seed = Integer.parseInt(((TextView) button.getChildAt(0)).getText().toString());
-            int difficulty = Integer.parseInt(((TextView) button.getChildAt(1)).getText().toString());
+            int seed = Integer.parseInt(((TextView) button.getChildAt(1)).getText().toString());
+            int difficulty = Integer.parseInt(((TextView) button.getChildAt(0)).getText().toString());
             Level level = new Level(seed, difficulty);
-            level.start(DashboardFragment.this.getContext());
+            level.start(DashboardFragment.this.getContext(), Level.scenario.FROM_DASHBOARD);
         }
 
     }
