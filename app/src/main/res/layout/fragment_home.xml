@@ -81,48 +81,6 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="12dp" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/home_stats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="16dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="40dp"
-
-                        android:layout_height="40dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/baseline_grade_24"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:id="@+id/home_cardtitle_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/placeholder"
-                        android:textColor="@color/dark"
-                        android:textSize="24sp"
-                        app:layout_constraintStart_toEndOf="@+id/imageView4"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <Space
-                android:layout_width="match_parent"
                 android:layout_height="28dp" />
 
             <View
@@ -134,11 +92,47 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/blitz_title" />
+                android:text="@string/blitz_title"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You won't earn the stars if you train here" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="8dp">
+
+                <SeekBar
+                    android:id="@+id/difficultyBar"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="1dp"
+                    android:max="10"
+                    android:progress="5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level_item_difficultytext"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/main_gameintent_card"
@@ -171,7 +165,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_title" />
+                android:text="@string/settings_title"
+                android:textSize="20sp" />
 
             <Space
                 android:layout_width="match_parent"

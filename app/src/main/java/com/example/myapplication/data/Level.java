@@ -20,7 +20,9 @@ public class Level {
     public enum scenario{
         FROM_DASHBOARD,
         FROM_CHALLENGE,
-        NONE, LAUNCH_TUTORIAL;
+        NONE,
+        LAUNCH_TUTORIAL,
+        NO_STARS;
     }
     public Level(int seed, int difficulty){
         this.seed = seed;
