@@ -21,7 +21,7 @@
             android:name=".game.GameMathActivity"
             android:exported="false" />
         <activity
-            android:name=".game.card.CardActivityView"
+            android:name=".game.GameCardActivity"
             android:exported="false"
             android:label="@string/title_activity_game_card"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

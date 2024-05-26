@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     boolean creatingUser;
     FirebaseAuth fireAuth = FirebaseAuth.getInstance();
     EditText emailView, passwordView, usernameView;
-    Button loginButton;
+    Button loginButton, changeModeButton;
     TextView errorView, titleView;
     ActivityLoginBinding binding;
     private final String TAG = this.getClass().getSimpleName();
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initViews();
 
         loginButton.setText(creatingUser? "Register" : "Sign in");
+        changeModeButton.setText(!creatingUser? "or Register" : "or Sign in");
         titleView.setText("");
     }
 
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "User with this email already exists. ");
         errorExplanationText.put("com.google.firebase.FirebaseNetworkException",
                 "Network error. Please check the internet connection. ");
+
     }
 
     private void initViews() {
@@ -67,13 +69,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         titleView = binding.textView;
 
         loginButton = binding.loginButton;
+        changeModeButton = binding.changeModeLogin;
 
         errorView.setVisibility(View.INVISIBLE);
-        if(!creatingUser){
-            usernameView.setVisibility(View.GONE);
-        }
+        usernameView.setVisibility(creatingUser? View.VISIBLE:View.GONE);
 
         loginButton.setOnClickListener(this);
+        changeModeButton.setOnClickListener(this);
+
+        loginButton.setText(creatingUser? "Register" : "Sign in");
+        changeModeButton.setText(!creatingUser? "or Register" : "or Sign in");
     }
 
     @Override
@@ -87,21 +92,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                |( String.valueOf(usernameView.getText()).isEmpty()
                    && usernameView.getVisibility()==View.VISIBLE )
                 ){
-                showError("Please fill in all fields.");
+                showError(getString(R.string.invalid_fields));
                 return;
             }
 
             if (passwordText.length() < 7){
-                showError("Password must be 8 or more in length.");
+                showError(getString(R.string.invalid_password));
                 return;
             }
 
             if (!String.valueOf(emailView.getText()).contains("@")){
-                showError("Not valid email.");
+                showError(getString(R.string.invalid_email));
                 return;
             }
 
             authorize();
+        }
+        if (v==changeModeButton){
+            creatingUser = !creatingUser;
+            initViews();
+            Log.i(TAG, "changed");
         }
     }
 
@@ -134,10 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             titleView.setText("Done!");
                             exitActivity(fireAuth.getCurrentUser());
                         }catch (RuntimeException e){
-                            String causeClass = Objects.requireNonNull(e.getCause()).getClass().toString();
-                            String explanation = errorExplanationText.get(causeClass);
-                            Log.e(TAG, explanation);
-                            showError(Objects.isNull(explanation) ? causeClass : explanation);
+                            showError(e);
                         }
 
                     } else {
@@ -155,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         fireAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.e(TAG, "Authenticated"+ Objects.requireNonNull(fireAuth.getCurrentUser()).getUid());
+                        Log.i(TAG, "Authenticated"+ Objects.requireNonNull(fireAuth.getCurrentUser()).getUid());
                         titleView.setText("Done!");
                         exitActivity(fireAuth.getCurrentUser());
                     } else {

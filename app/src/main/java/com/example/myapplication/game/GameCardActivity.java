@@ -1,5 +1,6 @@
-package com.example.myapplication.game.card;
+package com.example.myapplication.game;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,19 +16,21 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.FragmentManager;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameCardBinding;
+import com.example.myapplication.ui.AlertDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class CardActivityView extends AppCompatActivity implements View.OnClickListener {
+public class GameCardActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityGameCardBinding binding;
     private final Random rand = new Random();
@@ -73,14 +76,14 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
                 }
                 displayPalette();
                 vipeOut();
-                CardActivityView.this.runOnUiThread(
+                GameCardActivity.this.runOnUiThread(
                         () -> binding.gameCardButton.setVisibility(View.VISIBLE));
             }
 
             private void vipeOut() {
                 for (int i = 0; i < gridSize*gridSize; i++) {
-                    ImageView gridElement = (ImageView) ((LinearLayout) CardActivityView.this.binding.gameCardGrid.getChildAt(i)).getChildAt(0);
-                    CardActivityView.this.runOnUiThread(
+                    ImageView gridElement = (ImageView) ((LinearLayout) GameCardActivity.this.binding.gameCardGrid.getChildAt(i)).getChildAt(0);
+                    GameCardActivity.this.runOnUiThread(
                             () -> gridElement.setImageBitmap(elements.get(elements.size()-1)));
                 }
             }
@@ -89,7 +92,7 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
                 LinearLayout palette = binding.gameCardPallete;
                 for (Bitmap fruit:elements) {
 
-                    ImageButton imageButton = new ImageButton(CardActivityView.this);
+                    ImageButton imageButton = new ImageButton(GameCardActivity.this);
 
                     imageButton.setLayoutParams(new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -98,9 +101,9 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
 
                     imageButton.setImageBitmap(fruit);
 
-                    CardActivityView.this.runOnUiThread(
+                    GameCardActivity.this.runOnUiThread(
                             () -> palette.addView(imageButton));
-                    imageButton.setOnClickListener(CardActivityView.this);
+                    imageButton.setOnClickListener(GameCardActivity.this);
 
                 }
             }
@@ -186,6 +189,7 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
     private void checkCard() {
         binding.gameCardButton.setVisibility(View.INVISIBLE);
         int stars = 0;
+        boolean pause = false;
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
@@ -197,21 +201,34 @@ public class CardActivityView extends AppCompatActivity implements View.OnClickL
 
                 if (!isCardCorrect) {
                     input.setImageDrawable(
-                            AppCompatResources.getDrawable(CardActivityView.this, R.drawable.rectangle_17)
+                            AppCompatResources.getDrawable(GameCardActivity.this, R.drawable.rectangle_17)
                     );
+                    pause = true;
                 }
             }
         }
 
         binding.gameCardStarcount.setText(String.valueOf(stars));
 
-        DatabaseUpdater updater = new DatabaseUpdater(CardActivityView.this);
+        DatabaseUpdater updater = new DatabaseUpdater(GameCardActivity.this);
         try {
             updater.increment(stars, getIntent());
-        }catch (RuntimeException e){
+            Context thisC = GameCardActivity.this;
+
+            if (pause) Thread.sleep(1000);
+
+            FragmentManager manager = getSupportFragmentManager();
+            AlertDialogFragment dialog =
+                    new AlertDialogFragment("you have "+String.valueOf(stars)+" stars now!", "OK");
+
+            dialog.ifSucsessful(()-> startActivity(new Intent(thisC, MainActivity.class)));
+            dialog.show(manager, "myDialog");
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
             Log.e(TAG, String.valueOf(FirebaseAuth.getInstance().getCurrentUser()) + e.getCause());
         }
-        startActivity(new Intent(CardActivityView.this, MainActivity.class));
     }
 
 

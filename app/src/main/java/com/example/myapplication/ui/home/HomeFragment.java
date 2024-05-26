@@ -18,17 +18,17 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.Level;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.game.GameMathActivity;
-import com.example.myapplication.game.card.CardActivityView;
+import com.example.myapplication.game.GameCardActivity;
+import com.example.myapplication.ui.AlertDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     Button icard;
-    Button imath, ipattern, ipatte2rn;
+    Button imath, ilogin;
 
     SharedPreferences localData;
     int currentDate;
@@ -58,10 +58,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         icard.setOnClickListener(this);
         imath = binding.mainGameintentFast;
         imath.setOnClickListener(this);
-        ipattern = binding.mainLoginintentRegister;
-        ipattern.setOnClickListener(this);
-        ipatte2rn = binding.mainLoginintentSignin;
-        ipatte2rn.setOnClickListener(this);
+        ilogin = binding.mainLoginintentRegister;
+        ilogin.setOnClickListener(this);
 
 
         int dateData = localData.getInt("date", -1);
@@ -88,24 +86,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == icard){
-            Intent i = new Intent(getActivity(), CardActivityView.class);
+            Intent i = new Intent(getActivity(), GameCardActivity.class)
+                    .putExtra("scenario", Level.scenario.NONE);
             startActivity(i);
         }
         if (v == imath){
-            Intent i2 = new Intent(getActivity(), GameMathActivity.class);
+            Intent i2 = new Intent(getActivity(), GameMathActivity.class)
+                    .putExtra("scenario", Level.scenario.NONE);
             startActivity(i2);
         }
-        if (v == ipattern){
-            FirebaseAuth.getInstance().signOut();
-            Intent i2 = new Intent(getActivity(), LoginActivity.class)
-                    .putExtra("user", true);
-            startActivity(i2);
-        }
-        if (v == binding.mainLoginintentSignin){
-            FirebaseAuth.getInstance().signOut();
-            Intent i2 = new Intent(getActivity(), LoginActivity.class)
-                    .putExtra("user", false);
-            startActivity(i2);
+        if (v == ilogin){
+            AlertDialogFragment dialog = new AlertDialogFragment("Are you sure?", "Yes", "No");
+            dialog.ifSucsessful(()->{
+                FirebaseAuth.getInstance().signOut();
+                Intent i2 = new Intent(getActivity(), LoginActivity.class)
+                        .putExtra("user", true);
+                startActivity(i2);
+            });
+            dialog.show(requireActivity().getSupportFragmentManager(), "loginDialog");
         }
         if (v == binding.challengeOfDay){
             localData.edit().putInt("date", currentDate).apply();

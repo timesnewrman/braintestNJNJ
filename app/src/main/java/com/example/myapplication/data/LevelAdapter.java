@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.dashboard.DashboardFragment;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -39,12 +42,20 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
         return new LevelViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull LevelViewHolder holder, int position) {
 
-        holder.stars.setText(String.valueOf(position+1));
+        holder.levelNumber.setText(String.valueOf(position+1));
         Random rand = new Random(position);
-        holder.desc.setText(String.valueOf(rand.nextInt(position+1)));
+        holder.desc.setText(
+                        context.getString(R.string.level_item_difficultytext)
+                        + (position % 20 + 3) + " "
+                        + Arrays.asList(
+                                context.getString(R.string.blitz_card),
+                                context.getString(R.string.blitz_fast)
+                        ).get(position%2)
+        );
 
         if (position == levels.size()-1) {
             holder.itemView.setBackgroundColor(context.getColor(R.color.accent));
@@ -58,12 +69,12 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
         return this.levels.size();
     }
 
-    class LevelViewHolder extends RecyclerView.ViewHolder {
-        final TextView stars;
+    static class LevelViewHolder extends RecyclerView.ViewHolder {
+        final TextView levelNumber;
         final TextView desc;
         public LevelViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.stars = itemView.findViewById(R.id.item_level_star);
+            this.levelNumber = itemView.findViewById(R.id.item_level_star);
             this.desc = itemView.findViewById(R.id.item_level_description);
         }
     }

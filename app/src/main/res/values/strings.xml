@@ -3,7 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Levels</string>
     <string name="title_notifications">Stats</string>
 
     <string name="title_activity_game_card">GameCardActivity</string>
@@ -52,19 +52,30 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_username">Username</string>
 
-    <string name="action_sign_in">Sign in or register to continue</string>
+    <string name="sign_in_title">Sign in or register to continue</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="action_register_short">Register</string>
+
+    <string name="action_loading">Please wait</string>
+    <string name="welcome">Done!</string>
+    <string name="invalid_username">Not a valid email</string>
+    <string name="invalid_password">Password must be >8 characters</string>
     <string name="login_failed">"Login failed. "</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="blitz_card">blitz card</string>
-    <string name="blitz_fast">blitz fast</string>
+
+
+    <string name="blitz_title">Training</string>
+    <string name="blitz_card">Pattern game</string>
+    <string name="blitz_fast">Math game</string>
+
+    <string name="settings_title">Settings</string>
+
     <string name="challenge_of_the_day">Challenge of the day</string>
     <string name="go">Go!</string>
     <string name="placeholder">placeholder</string>
     <string name="challenge_completed">Challenge completed</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_fields">Please fill in all fields.</string>
+    <string name="level_item_difficultytext">difficulty:</string>
 
 
 </resources>

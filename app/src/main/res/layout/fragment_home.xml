@@ -15,12 +15,13 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/challenge_of_day"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="match_parent"
                 app:cardBackgroundColor="@color/accent"
                 app:cardCornerRadius="16dp">
 
@@ -53,11 +54,55 @@
                         android:id="@+id/challenge_accept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:backgroundTint="@color/button_background"
                         android:text="@string/go"
                         android:textColor="@color/dark"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/home_cardtitle_1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/home_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="40dp"
+
+                        android:layout_height="40dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/baseline_grade_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/home_cardtitle_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/challenge_of_the_day"
+                        android:textColor="@color/dark"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView4"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,8 +115,13 @@
             <View
                 android:id="@+id/divider4"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blitz_title" />
 
             <Space
                 android:layout_width="match_parent"
@@ -102,21 +152,17 @@
             <View
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_title" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
-
-            <Button
-                android:id="@+id/main_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/button_background"
-                android:padding="24dp"
-                android:text="settings"
-                android:textColor="@color/dark" />
 
             <Button
                 android:id="@+id/main_loginintent_register"
@@ -125,15 +171,6 @@
                 android:backgroundTint="@color/button_background"
                 android:padding="24dp"
                 android:text="log out and create another user"
-                android:textColor="@color/dark" />
-
-            <Button
-                android:id="@+id/main_loginintent_signin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/button_background"
-                android:padding="24dp"
-                android:text="log out and login through an existing account"
                 android:textColor="@color/dark" />
 
         </LinearLayout>

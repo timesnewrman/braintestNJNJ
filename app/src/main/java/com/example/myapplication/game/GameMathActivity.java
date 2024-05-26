@@ -1,6 +1,7 @@
 package com.example.myapplication.game;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DatabaseUpdater;
 import com.example.myapplication.databinding.ActivityGameMathBinding;
+import com.example.myapplication.ui.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -63,7 +66,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initQuestion() {
-        questionText.setText(elements.toString());
+        questionText.setText(toPresentableText(elements));
         correct = elements.stream().mapToInt(Integer::intValue).sum();
     }
     private void initQuestion(int add) {
@@ -120,12 +123,20 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                 times--;
                 if (times == 0)
                 {
-                    Toast.makeText(GameMathActivity.this, "congrats! you have "+ points +" points now", Toast.LENGTH_SHORT).show();
-
                     DatabaseUpdater updater = new DatabaseUpdater(GameMathActivity.this);
                     updater.increment(points, getIntent());
 
-                    startActivity(new Intent(GameMathActivity.this, MainActivity.class));
+                    Context thisC = GameMathActivity.this;
+
+                    FragmentManager manager = getSupportFragmentManager();
+                    AlertDialogFragment dialog =
+                            new AlertDialogFragment("you have "+String.valueOf(points)+" stars now!", "OK");
+
+                    dialog.ifSucsessful(() -> {
+                        Log.i(TAG, "closed");
+                        startActivity(new Intent(thisC, MainActivity.class));
+                    });
+                    dialog.show(manager, "myDialog");
                 } else {
                     initQuestion(1);
                     initButtons(rand);
@@ -136,7 +147,8 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
 
                 elements.remove(1);
                 times++;
-                initQuestion();
+
+                if (elements.size()<2) {initQuestion(1);} else {initQuestion();}
 
                 initButtons(rand);
             }

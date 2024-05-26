@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected  void onResume() {
+        super.onResume();
+        checkAuthorisation();
+    }
+    @Override
     public void onClick(View v) {
         Log.i("main activity", "recieved a click");
     }

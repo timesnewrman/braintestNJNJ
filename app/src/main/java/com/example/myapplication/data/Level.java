@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.game.GameMathActivity;
-import com.example.myapplication.game.card.CardActivityView;
+import com.example.myapplication.game.GameCardActivity;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -27,7 +27,7 @@ public class Level {
         this.difficulty = difficulty;
         rand.setSeed(seed);
         this.activity = Arrays.asList(
-                CardActivityView.class,
+                GameCardActivity.class,
                 GameMathActivity.class
         ).get(seed%2);
     }
@@ -43,7 +43,7 @@ public class Level {
         rand.setSeed(seed);
         this.difficulty=seed%20+3;
         this.activity = Arrays.asList(
-                CardActivityView.class,
+                GameCardActivity.class,
                 GameMathActivity.class
         ).get(seed%2);
     }
