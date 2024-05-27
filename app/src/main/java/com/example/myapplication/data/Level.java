@@ -43,11 +43,9 @@ public class Level {
     public Level(int seed) {
         this.seed = seed;
         rand.setSeed(seed);
-        this.difficulty=seed%19+3;
-        this.activity = Arrays.asList(
-                GameCardActivity.class,
-                GameMathActivity.class
-        ).get(seed%2);
+        Object[] calc = calculate(seed);
+        this.difficulty =(Integer) calc[0];
+        this.activity = calc[1];
     }
 
 
@@ -66,5 +64,15 @@ public class Level {
         return "Level{" +
                 "seed=" + seed +
                 '}';
+    }
+
+    public static Object[] calculate(int seed){
+        Object[] calc = new Object[2];
+        calc[0] = seed%19+3;
+        calc[1] = Arrays.asList(
+                GameCardActivity.class,
+                GameMathActivity.class
+        ).get(seed%2);
+        return calc;
     }
 }

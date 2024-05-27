@@ -77,6 +77,8 @@
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_fields">Please fill in all fields.</string>
     <string name="level_item_difficultytext">difficulty:</string>
+    <string name="go_to_start">Go to start</string>
+    <string name="go_to_end">Go to end</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.dashboard;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,12 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,13 +22,19 @@ import com.example.myapplication.data.LevelAdapter;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class DashboardFragment extends Fragment implements View.OnClickListener {
+public class DashboardFragment
+        extends Fragment
+        implements View.OnClickListener,
+                    View.OnScrollChangeListener
+{
 
     private final String TAG = this.getClass().getSimpleName();
+    private Button go_start;
     private final ArrayList<Level> list = new ArrayList<>();
     private SharedPreferences localData;
+
+    RecyclerView levelView;
 
     private FragmentDashboardBinding binding;
 
@@ -37,12 +44,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         localData = requireActivity().getSharedPreferences("level", Context.MODE_PRIVATE);
 
+        go_start = binding.dashboardButtonstart;
+        go_start.setOnClickListener(this);
+
         displayAdapterView();
         return binding.getRoot();
     }
     private void displayAdapterView(){
 
-        RecyclerView levelView = binding.dashboardRecyclerview;
+        levelView = binding.dashboardRecyclerview;
 
         Log.i(TAG, String.valueOf(localData.getInt("level", 666)));
         for (int i=0; i<localData.getInt("level", 1); i++) list.add(new Level(i));
@@ -53,7 +63,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         levelView.setAdapter(levelAdapter);
 
         levelView.smoothScrollToPosition(list.size()-1);
+
+        levelView.setOnScrollChangeListener(this);
     }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -74,5 +88,18 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
             list.get(number-1).start(getContext(), scenario);
         }
 
+        if (v == go_start) {
+            levelView.smoothScrollToPosition(0);
+            go_start.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        go_start.setVisibility(oldScrollY > -1?
+                View.VISIBLE:
+                View.GONE);
+
+        Log.i(TAG, String.valueOf(oldScrollY));
     }
 }

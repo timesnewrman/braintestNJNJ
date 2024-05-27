@@ -43,13 +43,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             View root = binding.getRoot();
 
             localData = requireContext().getSharedPreferences("level", Context.MODE_PRIVATE);
-            initButtons();
 
+            initButtons();
+            initChallenge();
 
             return root;
         }catch (Exception e){
             Log.e("home","on create view", e);
             throw e;
+        }
+    }
+
+    private void initChallenge() {
+        int dateData = localData.getInt("date", -1);
+        LocalDate date = LocalDate.now();
+
+        currentDate = Integer.parseInt(date.format(DateTimeFormatter.ofPattern("D")));
+        binding.totalstarchallenge.setText(String.valueOf(Level.calculate(currentDate)[0]));
+
+        if (dateData != currentDate) {
+            binding.challengeOfDay.setOnClickListener(this);
+        } else {
+            binding.challengeOfDay.setCardBackgroundColor(requireContext().getColor(R.color.card_background));
+            binding.homeCardtitle1.setTextColor(requireContext().getColor(R.color.dark));
+            binding.challengeAccept.setVisibility(View.GONE);
+            binding.homeCardtitle1.setText(R.string.challenge_completed);
         }
     }
 
@@ -60,21 +78,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imath.setOnClickListener(this);
         ilogin = binding.mainLoginintentRegister;
         ilogin.setOnClickListener(this);
-
-
-        int dateData = localData.getInt("date", -1);
-        LocalDate date = LocalDate.now();
-
-        currentDate = Integer.parseInt(date.format(DateTimeFormatter.ofPattern("D")));
-
-        if (dateData != currentDate) {
-            binding.challengeOfDay.setOnClickListener(this);
-        } else {
-            binding.challengeOfDay.setCardBackgroundColor(requireContext().getColor(R.color.card_background));
-            binding.homeCardtitle1.setTextColor(requireContext().getColor(R.color.dark));
-            binding.challengeAccept.setVisibility(View.GONE);
-            binding.homeCardtitle1.setText(R.string.challenge_completed);
-        }
     }
 
     @Override
