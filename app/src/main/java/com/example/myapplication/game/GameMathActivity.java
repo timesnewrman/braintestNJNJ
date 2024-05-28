@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication.MainActivity;
@@ -47,7 +48,7 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
         initViews();
 
         pointText.setText(String.valueOf(0));
-        times = rand.nextInt(5)+2;
+        times = getIntent().getIntExtra("difficulty",rand.nextInt(5)+2)%5+2;
         total += times;
 
         answerB1.setOnClickListener(this);
@@ -132,9 +133,9 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                     FragmentManager manager = getSupportFragmentManager();
                     AlertDialogFragment dialog =
                             new AlertDialogFragment(
-                                    "You have earned "
+                                    getString(R.string.stars_half1)
                                     +String.valueOf(points)
-                                    + " stars out of "
+                                    + getString(R.string.stars_half2)
                                     +String.valueOf(total*30), "OK");
 
                     dialog.ifSucsessful(() -> {
@@ -149,18 +150,22 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
             } else {
                 points -= 20;
                 pointText.setText(Integer.toString(points));
+                clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(this,R.color.error));
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                elements.remove(1);
-
-                if (elements.size()<2) {initQuestion(1);} else {initQuestion();}
-
-                initButtons(rand);
+                Thread thread = new Thread(()-> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    runOnUiThread(()->{
+                        elements.remove(1);
+                        if (elements.size()<2) {initQuestion(1);} else {initQuestion();}
+                        clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(this,R.color.button_background));
+                        initButtons(rand);
+                    });
+                });
+                thread.start();
             }
         }
     }

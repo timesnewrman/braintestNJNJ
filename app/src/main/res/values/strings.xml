@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name" translatable="false">My Application</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
 
     <string name="title_home">Home</string>
     <string name="title_dashboard">Levels</string>
     <string name="title_notifications">Stats</string>
 
-    <string name="title_activity_game_card">GameCardActivity</string>
+    <string name="title_activity_game_card" translatable="false">GameCardActivity</string>
     <string name="action_settings">Settings</string>
 
-    <string name="lorem_ipsum">
+    <string name="lorem_ipsum" translatable="false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
         dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
@@ -46,7 +46,7 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -72,13 +72,29 @@
 
     <string name="challenge_of_the_day">Challenge of the day</string>
     <string name="go">Go!</string>
-    <string name="placeholder">placeholder</string>
+    <string name="placeholder" translatable="false">placeholder</string>
     <string name="challenge_completed">Challenge completed</string>
-    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_email">Not a valid email</string>
     <string name="invalid_fields">Please fill in all fields.</string>
-    <string name="level_item_difficultytext">difficulty:</string>
+    <string name="level_item_difficultytext">Difficulty:</string>
     <string name="go_to_start">Go to start</string>
-    <string name="go_to_end">Go to end</string>
+
+    <string name="log_out_confirmation">Are you sure?</string>
+
+    <string name="tutorial_step1">Remember the picture!</string>
+    <string name="tutorial_step2">Ckick the buttons at the top to choose a fruit you remembered</string>
+    <string name="tutorial_step3">To place the picture, click on gray square!</string>
+
+    <string name="stars_half1">You have got </string>
+    <string name="stars_half2"> stars out of </string>
+
+    <string name="error_login_server">Internal server error. Try again later. Details: </string>
+    <string name="error_login_invalidcredentials">Invalid login credentials. </string>
+    <string name="error_login_alreadyexists">User with this email already exists. If you want to log in, click the button below! </string>
+    <string name="error_network">No internet connection.</string>
+
+    <string name="training_description">You won\'t earn the stars during training</string>
+    <string name="training_warning">Remember that you won\'t earn the stars during training!</string>
 
 
 </resources>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.myapplication.game.GameMathActivity;
 import com.example.myapplication.game.GameCardActivity;
+import com.google.android.gms.common.internal.Objects;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -16,6 +17,8 @@ public class Level {
     int difficulty;
     Object activity;
     Random rand = new Random();
+
+
 
     public enum scenario{
         FROM_DASHBOARD,
@@ -74,5 +77,16 @@ public class Level {
                 GameMathActivity.class
         ).get(seed%2);
         return calc;
+    }
+
+    public static int calculateStars(int seed) {
+        int prediction;
+        Object[] calc = calculate(seed);
+        if (Objects.equal(calc[1],GameCardActivity.class)){
+            prediction = (seed%5)*(seed%5)*30;
+        }else{
+            prediction = ((seed%5)+2)*30;
+        }
+        return prediction;
     }
 }

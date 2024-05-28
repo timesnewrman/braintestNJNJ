@@ -99,7 +99,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You won't earn the stars if you train here" />
+                android:text="@string/training_description" />
 
             <Space
                 android:layout_width="match_parent"

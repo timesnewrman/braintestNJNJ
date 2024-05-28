@@ -91,7 +91,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     if (tutorial) GameCardActivity.this.runOnUiThread(
                             () -> Toast.makeText(GameCardActivity.this
-                                    ,"Remember the picture!"
+                                    ,getString(R.string.tutorial_step1)
                                     , Toast.LENGTH_SHORT).show()
                     );
                     Thread.sleep(3000L);
@@ -105,7 +105,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
                             binding.gameCardButton.setVisibility(View.VISIBLE);
                             if (tutorial) {
                                 new AlertDialogFragment(
-                                        "Choose the picture at the top of the screen...","OK"
+                                        getString(R.string.tutorial_step2),"OK"
                                 ).show(GameCardActivity.this.getSupportFragmentManager(),"alerttutor_1");
                             }
                         });
@@ -221,7 +221,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
                 ImageButton view = (ImageButton) v;
                 brush = ((BitmapDrawable)view.getDrawable()).getBitmap();
                 if (tutorial) new AlertDialogFragment(
-                        "Then click on the card to set it to your selected fruit!", "OK"
+                        getString(R.string.tutorial_step3), "OK"
                 ).show(GameCardActivity.this.getSupportFragmentManager(),"alerttutor_2");
             }
             if (v == binding.gameCardButton){
@@ -263,9 +263,9 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
             FragmentManager manager = getSupportFragmentManager();
             AlertDialogFragment dialog =
                     new AlertDialogFragment(
-                            "You have earned "
+                            getString(R.string.stars_half1)
                             +String.valueOf(stars)
-                            +" stars out of "
+                            +getString(R.string.stars_half2)
                             +String.valueOf(30*gridSize*gridSize), "OK");
 
             dialog.ifSucsessful(()-> startActivity(new Intent(thisC, MainActivity.class)));

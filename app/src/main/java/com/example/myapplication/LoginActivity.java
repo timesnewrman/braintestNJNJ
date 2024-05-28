@@ -51,13 +51,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initErrorMessages() {
         errorExplanationText.put("com.google.firebase.firestore.FirebaseFirestoreException",
-                "Internal server error, try again later. Details: ");
+                getString(R.string.error_login_server));
         errorExplanationText.put("com.google.firebase.auth.FirebaseAuthInvalidCredentialsException",
-                "Invalid credentials. ");
+                getString(R.string.error_login_invalidcredentials));
         errorExplanationText.put("com.google.firebase.auth.FirebaseAuthUserCollisionException",
-                "User with this email already exists. ");
+                getString(R.string.error_login_alreadyexists));
         errorExplanationText.put("com.google.firebase.FirebaseNetworkException",
-                "Network error. Please check the internet connection. ");
+                getString(R.string.error_network));
 
     }
 
@@ -119,7 +119,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = String.valueOf(emailView.getText());
         String password = String.valueOf(passwordView.getText());
         String username = String.valueOf(usernameView.getText());
+
         loginButton.setVisibility(View.GONE);
+        changeModeButton.setVisibility(View.GONE);
 
         Log.i(TAG, email+password+username);
         if (creatingUser) {
@@ -189,6 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         titleView.setText("");
         loginButton.setVisibility(View.VISIBLE);
+        changeModeButton.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -202,6 +205,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.e(TAG, err.toString());
 
         loginButton.setVisibility(View.VISIBLE);
+        changeModeButton.setVisibility(View.VISIBLE);
         titleView.setText("");
     }
 }

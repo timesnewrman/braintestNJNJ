@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,7 +58,7 @@ public class DatabaseUpdater {
                 .addOnFailureListener(err -> {
                     throw new RuntimeException(err);
                 }); else {
-            Toast.makeText(context, "Remember, you won't earn stars in training mode", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.training_warning), Toast.LENGTH_LONG).show();
         }
         if (Objects.equals(scenario,Level.scenario.FROM_DASHBOARD)) {
             SharedPreferences data = context.getSharedPreferences("level", Context.MODE_PRIVATE);

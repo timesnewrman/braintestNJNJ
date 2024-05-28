@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Главная страница</string>
+    <string name="title_dashboard">Уровни</string>
+    <string name="title_notifications">Статистика</string>
+    <string name="action_settings">Настройки</string>
+    <string name="prompt_email">Электронная почта</string>
+    <string name="prompt_password">Пароль</string>
+
+    <string name="prompt_username">Имя пользователя</string>
+
+    <string name="sign_in_title">-</string>
+
+    <string name="action_sign_in_short">Войти в аккаунт</string>
+    <string name="action_sign_out_short">Выйти из аккаунта</string>
+
+    <string name="action_register_short">Зарегистрироваться</string>
+    <string name="action_loading">Пожалуйста, подождите…</string>
+    <string name="welcome">Готово!</string>
+    <string name="invalid_username">Неправильный email</string>
+
+    <string name="invalid_password">Пароль должен быть больше восьми символов.</string>
+    <string name="login_failed">"Упс! "</string>
+
+    <string name="blitz_title">Тренировка</string>
+
+    <string name="blitz_card">Узор</string>
+    <string name="blitz_fast">Математика</string>
+    <string name="settings_title">Настройки</string>
+
+    <string name="challenge_of_the_day">Челлендж дня</string>
+    <string name="go">Вперёд!</string>
+    <string name="challenge_completed">Челлендж пройден</string>
+
+    <string name="invalid_email">Неправильный адрес электронной почты.</string>
+    <string name="invalid_fields">Заполните все поля!</string>
+    <string name="level_item_difficultytext">Сложность:</string>
+    <string name="go_to_start">Придти в начало</string>
+
+    <string name="log_out_confirmation">Вы уверены?</string>
+
+    <string name="tutorial_step1">Запомните картинку!</string>
+    <string name="tutorial_step2">Нажмите на одну из карт сверху, чтобы её выбрать</string>
+    <string name="tutorial_step3">Теперь поменяйте серый квадрат на выбранную карту.</string>
+
+    <string name="stars_half1">Вы получили: </string>
+    <string name="stars_half2"> звёзд из возможных </string>
+
+    <string name="error_login_server">Похоже, мы поймали ошибку сервера. Попробуйте позже! Детали: </string>
+    <string name="error_login_invalidcredentials">Неверные данные пользователя. </string>
+    <string name="error_login_alreadyexists">Пользователь с данной электронной почтой уже существует. Хотите войти - нажмите на кнопку снизу! </string>
+    <string name="error_network">Нет подключения к интернету.</string>
+
+    <string name="training_description">При тренировке вы не будете получать звёзд</string>
+    <string name="training_warning">Внимание! При тренировке вы не будете получать звёзд</string>
+</resources>

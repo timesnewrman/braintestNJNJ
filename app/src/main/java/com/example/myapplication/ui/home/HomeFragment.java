@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         LocalDate date = LocalDate.now();
 
         currentDate = Integer.parseInt(date.format(DateTimeFormatter.ofPattern("D")));
-        binding.totalstarchallenge.setText(String.valueOf(Level.calculate(currentDate)[0]));
+        binding.totalstarchallenge.setText(String.valueOf(Level.calculateStars(currentDate)));
 
         if (dateData != currentDate) {
             binding.challengeOfDay.setOnClickListener(this);
@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             startActivity(i2);
         }
         if (v == ilogin){
-            AlertDialogFragment dialog = new AlertDialogFragment("Are you sure?", "Yes", "No");
+            AlertDialogFragment dialog = new AlertDialogFragment(getString(R.string.log_out_confirmation), "Yes", "No");
             dialog.ifSucsessful(()->{
                 FirebaseAuth.getInstance().signOut();
                 Intent i2 = new Intent(getActivity(), LoginActivity.class)
