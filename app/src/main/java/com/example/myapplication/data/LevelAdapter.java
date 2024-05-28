@@ -29,7 +29,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
     List<?> levels;
     public LevelAdapter(Context context, List<?> list, View.OnClickListener clickListener){
         this.levels = list;
-        Log.i("uhuhuh", Collections.singletonList(list).toString());
+
         this.inflater = LayoutInflater.from(context);
         this.clickListener = clickListener;
         this.context = context;
@@ -47,7 +47,6 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.LevelViewHol
     public void onBindViewHolder(@NonNull LevelViewHolder holder, int position) {
 
         holder.levelNumber.setText(String.valueOf(position+1));
-        Random rand = new Random(position);
         holder.desc.setText(
                         context.getString(R.string.level_item_difficultytext)
                         + (position % 19 + 3) + " "

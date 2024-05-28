@@ -1,17 +1,10 @@
 package com.example.myapplication.data;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-
-import androidx.annotation.NonNull;
-
-import com.example.myapplication.R;
-
 import java.util.Base64;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class UserStats {
@@ -20,8 +13,6 @@ public class UserStats {
     public Object stars;
 
     private String userid;
-
-    public UserStats() {}
 
     public UserStats(Base64 avatar, String username, int stars) {
         this.username = username;

@@ -13,10 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Objects;

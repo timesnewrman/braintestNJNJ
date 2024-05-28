@@ -70,7 +70,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
         if (tutorial) gridSize = 1;
 
-        Log.i(TAG, String.valueOf(gridSize)+" "+ String.valueOf(gridSizeintent));
+
         gridPattern = new Bitmap[gridSize][gridSize];
         initCards();
         initGrid();
@@ -145,7 +145,7 @@ public class GameCardActivity extends AppCompatActivity implements View.OnClickL
 
     private void initCards() {
         int uniqueCards =
-                Objects.equals(getIntent().getExtras().get("scenario"), Level.scenario.FROM_CHALLENGE)?
+                Objects.equals(Objects.requireNonNull(getIntent().getExtras()).get("scenario"), Level.scenario.FROM_CHALLENGE)?
                 4 : getIntent().getExtras().getInt("difficulty", rand.nextInt(4))%4+1;
         Log.i(TAG, String.valueOf(uniqueCards));
 
