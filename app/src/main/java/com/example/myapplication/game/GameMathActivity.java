@@ -133,9 +133,9 @@ public class GameMathActivity extends AppCompatActivity implements View.OnClickL
                     FragmentManager manager = getSupportFragmentManager();
                     AlertDialogFragment dialog =
                             new AlertDialogFragment(
-                                    getString(R.string.stars_half1)
+                                    getString(R.string.stars_half1) +" "
                                     +String.valueOf(points)
-                                    + getString(R.string.stars_half2)
+                                    + getString(R.string.stars_half2) +" "
                                     +String.valueOf(total*30), "OK");
 
                     dialog.ifSucsessful(() -> {

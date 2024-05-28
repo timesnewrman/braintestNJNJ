@@ -20,11 +20,13 @@
             android:noHistory="true" />
         <activity
             android:name=".game.GameMathActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true"/>
         <activity
             android:name=".game.GameCardActivity"
             android:exported="false"
             android:label="@string/title_activity_game_card"
+            android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"

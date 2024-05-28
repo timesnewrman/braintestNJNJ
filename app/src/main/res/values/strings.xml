@@ -95,6 +95,7 @@
 
     <string name="training_description">You won\'t earn the stars during training</string>
     <string name="training_warning">Remember that you won\'t earn the stars during training!</string>
+    <string name="or">or</string>
 
 
 </resources>

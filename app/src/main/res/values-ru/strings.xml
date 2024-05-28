@@ -53,4 +53,5 @@
 
     <string name="training_description">При тренировке вы не будете получать звёзд</string>
     <string name="training_warning">Внимание! При тренировке вы не будете получать звёзд</string>
+    <string name="or">или</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private final String TAG = this.getClass().getSimpleName();
     private final HashMap<String, String> errorExplanationText = new HashMap<>();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +47,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initErrorMessages();
         initViews();
 
-        loginButton.setText(creatingUser? "Register" : "Sign in");
-        changeModeButton.setText(!creatingUser? "or Register" : "or Sign in");
+        loginButton.setText(creatingUser?
+                getString(R.string.action_register_short) : getString(R.string.action_sign_in_short));
+        changeModeButton.setText(getString(R.string.or)+" "+ (!creatingUser?
+                getString(R.string.action_register_short) : getString(R.string.action_sign_in_short))
+        );
         titleView.setText("");
     }
 
@@ -61,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void initViews() {
         emailView = binding.loginEmail;
         passwordView = binding.loginPassword;
@@ -77,13 +84,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setOnClickListener(this);
         changeModeButton.setOnClickListener(this);
 
-        loginButton.setText(creatingUser? "Register" : "Sign in");
-        changeModeButton.setText(!creatingUser? "or Register" : "or Sign in");
+        loginButton.setText(creatingUser?
+                getString(R.string.action_register_short) : getString(R.string.action_sign_in_short));
+        changeModeButton.setText(getString(R.string.or)+" "+ (!creatingUser?
+                getString(R.string.action_register_short) : getString(R.string.action_sign_in_short))
+        );
     }
 
     @Override
     public void onClick(View v) {
         if (v == loginButton){
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
             String passwordText = String.valueOf(passwordView.getText());
 
             if (  passwordText.isEmpty()
