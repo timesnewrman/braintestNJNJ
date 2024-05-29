@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imath.setOnClickListener(this);
         ilogin = binding.mainLoginintentRegister;
         ilogin.setOnClickListener(this);
+        binding.challengeAccept.setOnClickListener(this);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             });
             dialog.show(requireActivity().getSupportFragmentManager(), "loginDialog");
         }
-        if (v == binding.challengeOfDay){
+        if (v == binding.challengeOfDay | v == binding.challengeAccept){
             localData.edit().putInt("date", currentDate).apply();
             Level level = new Level(currentDate);
             level.start(this.getContext(), Level.scenario.FROM_CHALLENGE);

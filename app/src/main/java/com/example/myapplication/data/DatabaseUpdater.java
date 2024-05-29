@@ -60,7 +60,7 @@ public class DatabaseUpdater {
                 }); else {
             Toast.makeText(context, context.getString(R.string.training_warning), Toast.LENGTH_LONG).show();
         }
-        if (Objects.equals(scenario,Level.scenario.FROM_DASHBOARD)) {
+        if (Objects.equals(scenario,Level.scenario.FROM_DASHBOARD)|Objects.equals(scenario,Level.scenario.LAUNCH_TUTORIAL)) {
             SharedPreferences data = context.getSharedPreferences("level", Context.MODE_PRIVATE);
             data.edit().putInt("level", data.getInt("level",2)+1).apply();
         }
