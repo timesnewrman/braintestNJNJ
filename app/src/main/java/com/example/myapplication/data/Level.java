@@ -83,7 +83,7 @@ public class Level {
         int prediction;
         Object[] calc = calculate(seed);
         if (Objects.equal(calc[1],GameCardActivity.class)){
-            prediction = (seed%5)*(seed%5)*30;
+            prediction = Math.max((seed%5)*(seed%5), 2)*30;
         }else{
             prediction = ((seed%5)+2)*30;
         }
